@@ -92,7 +92,7 @@ export default function Footer() {
     }
   };
 
-  const handleOpenCookieBanner = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleOpenCookieBanner = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (typeof window === 'undefined') return;
     window.dispatchEvent(new Event('open-cookie-banner'));
@@ -376,13 +376,13 @@ export default function Footer() {
                 >
                   Datenschutz
                 </Link>
-                <a
-                  href="#cookie"
+                <button
+                  type="button"
                   onClick={handleOpenCookieBanner}
                   className="text-[color:var(--page-fg)] opacity-60 hover:text-[#22d3ee] transition-colors"
                 >
                   Cookie-Einstellungen
-                </a>
+                </button>
               </div>
             </div>
           </div>
