@@ -1,4 +1,5 @@
 import type { MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const handleSmoothFooterNavClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -118,10 +119,6 @@ export default function Footer() {
                     className="flex items-center gap-2 text-2xl md:text-3xl font-light uppercase tracking-[0.3em]"
                     role="heading"
                     aria-level={2}
-                    style={{
-                      fontFamily:
-                        'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-                    }}
                   >
                     {'SLICKER'.split('').map((letter, index) => (
                       <span
@@ -199,10 +196,6 @@ export default function Footer() {
             <div className="lg:col-span-2">
               <h3
                 className="text-xl font-semibold mb-6 pl-1"
-                style={{
-                  fontFamily:
-                    'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-                }}
               >
                 Leistungen
               </h3>
@@ -268,10 +261,6 @@ export default function Footer() {
             <div className="lg:col-span-2">
               <h3
                 className="text-xl font-semibold mb-6 pl-1"
-                style={{
-                  fontFamily:
-                    'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-                }}
               >
                 Unternehmen
               </h3>
@@ -343,10 +332,6 @@ export default function Footer() {
             <div className="lg:col-span-4">
               <h3
                 className="text-xl font-semibold mb-6"
-                style={{
-                  fontFamily:
-                    'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-                }}
               >
                 Signal / Newsletter
               </h3>
@@ -379,18 +364,18 @@ export default function Footer() {
                 © 2025 Slicker. Alle Rechte vorbehalten.
               </p>
               <div className="flex space-x-6 text-xs md:text-sm">
-                <a
-                  href="/impressum"
+                <Link
+                  to="/impressum"
                   className="text-[color:var(--page-fg)] opacity-60 hover:text-[#22d3ee] transition-colors"
                 >
                   Impressum
-                </a>
-                <a
-                  href="/datenschutz"
+                </Link>
+                <Link
+                  to="/datenschutz"
                   className="text-[color:var(--page-fg)] opacity-60 hover:text-[#22d3ee] transition-colors"
                 >
                   Datenschutz
-                </a>
+                </Link>
                 <a
                   href="#cookie"
                   onClick={handleOpenCookieBanner}
