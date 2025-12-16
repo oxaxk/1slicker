@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --page-bg: #020617; /* Standard: Dark */
+  --page-fg: #e5f3ff;
+  --section-glass: rgba(10, 14, 22, 0.58);
+  --card-glass: rgba(10, 14, 22, 0.42);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+html[data-theme='dark'] {
+  --page-bg: #020617;
+  --page-fg: #e5f3ff;
+  --section-glass: rgba(10, 14, 22, 0.58);
+  --card-glass: rgba(10, 14, 22, 0.42);
+}
+
+html[data-theme='light'] {
+  --page-bg: linear-gradient(180deg, #eef9fd 0%, #e9f6fb 100%);
+  --page-fg: #0f172a;
+  --section-glass: rgba(8, 145, 178, 0.22);
+  --card-glass: rgba(8, 145, 178, 0.16);
+}
+
+/* Light theme: map common Tailwind text colors to theme variables */
+html[data-theme='light'] .text-white,
+html[data-theme='light'] .text-white\/90,
+html[data-theme='light'] .text-white\/80,
+html[data-theme='light'] .text-white\/70,
+html[data-theme='light'] .text-white\/60,
+html[data-theme='light'] .text-white\/50,
+html[data-theme='light'] .text-white\/40,
+html[data-theme='light'] .text-white\/30,
+html[data-theme='light'] .text-white\/20,
+html[data-theme='light'] .text-white\/10,
+html[data-theme='light'] .text-white\/5 {
+  color: var(--page-fg) !important;
+}
+
+html[data-theme='light'] .hover\:text-white:hover,
+html[data-theme='light'] .hover\:text-white\/90:hover,
+html[data-theme='light'] .hover\:text-white\/80:hover,
+html[data-theme='light'] .hover\:text-white\/70:hover {
+  color: var(--page-fg) !important;
+}
+
+/* Light theme: map common muted text utilities (used for subtitles) */
+html[data-theme='light'] .text-gray-300,
+html[data-theme='light'] .text-gray-200,
+html[data-theme='light'] .text-slate-300,
+html[data-theme='light'] .text-slate-200,
+html[data-theme='light'] .text-zinc-300,
+html[data-theme='light'] .text-zinc-200,
+html[data-theme='light'] .text-neutral-300,
+html[data-theme='light'] .text-neutral-200 {
+  color: rgba(15, 23, 42, 0.72) !important;
+}
+
+/* Light theme: prevent ultra-low opacity text from disappearing */
+html[data-theme='light'] .text-white\/15,
+html[data-theme='light'] .text-white\/12,
+html[data-theme='light'] .text-white\/8 {
+  color: rgba(15, 23, 42, 0.6) !important;
+}
+
+html[data-theme='light'] .text-gray-400,
+html[data-theme='light'] .text-slate-400,
+html[data-theme='light'] .text-zinc-400,
+html[data-theme='light'] .text-neutral-400 {
+  color: rgba(15, 23, 42, 0.64) !important;
+}
+
+/* Light theme: darker cyan accent for readability */
+html[data-theme='light'] .text-cyan-300,
+html[data-theme='light'] .text-cyan-200,
+html[data-theme='light'] .text-\[\#22d3ee\],
+html[data-theme='light'] .text-\[\#38e0ff\] {
+  color: #0891b2 !important;
+}
+
+html[data-theme='light'] .hover\:text-cyan-300:hover,
+html[data-theme='light'] .hover\:text-cyan-200:hover,
+html[data-theme='light'] .hover\:text-\[\#22d3ee\]:hover,
+html[data-theme='light'] .hover\:text-\[\#38e0ff\]:hover {
+  color: #0891b2 !important;
+}
+
+html[data-theme='light'] .bg-cyan-500\/90 {
+  background-color: rgba(8, 145, 178, 0.9) !important;
+}
+
+/* Light theme: map hard-coded light hex text utilities to dark foreground */
+html[data-theme='light'] .text-\[\#E5E7EB\],
+html[data-theme='light'] .text-\[\#F9FAFB\],
+html[data-theme='light'] .text-\[\#FFFFFF\],
+html[data-theme='light'] .text-slate-50,
+html[data-theme='light'] .text-slate-100,
+html[data-theme='light'] .text-gray-50,
+html[data-theme='light'] .text-gray-100,
+html[data-theme='light'] .text-neutral-50,
+html[data-theme='light'] .text-neutral-100,
+html[data-theme='light'] .text-zinc-50,
+html[data-theme='light'] .text-zinc-100 {
+  color: var(--page-fg) !important;
+}
+
+/* Light theme: remove "dark blocks" from components still using bg-black/* */
+html[data-theme='light'] .bg-black\/80,
+html[data-theme='light'] .bg-black\/75,
+html[data-theme='light'] .bg-black\/70,
+html[data-theme='light'] .bg-black\/65,
+html[data-theme='light'] .bg-black\/60,
+html[data-theme='light'] .bg-black\/50,
+html[data-theme='light'] .bg-black\/40,
+html[data-theme='light'] .bg-black\/35,
+html[data-theme='light'] .bg-black\/30,
+html[data-theme='light'] .bg-black\/25,
+html[data-theme='light'] .bg-black\/20 {
+  background-color: var(--section-glass) !important;
+}
+
+/* Light theme: subtle cyan glass for elements that used bg-white/5 etc */
+html[data-theme='light'] .bg-white\/5,
+html[data-theme='light'] .bg-white\/10,
+html[data-theme='light'] .bg-white\/15 {
+  background-color: var(--card-glass) !important;
+}
+
+/* Light theme: borders should be darker (not white) */
+html[data-theme='light'] .border-white,
+html[data-theme='light'] .border-white\/10,
+html[data-theme='light'] .border-white\/12,
+html[data-theme='light'] .border-white\/14,
+html[data-theme='light'] .border-white\/15,
+html[data-theme='light'] .border-white\/20,
+html[data-theme='light'] .border-white\/25 {
+  border-color: rgba(15, 23, 42, 0.14) !important;
+}
+
+/* Light theme: glass pills/buttons default to cyan-tinted surface */
+html[data-theme='light'] .bg-\[var\(--section-glass\)\] {
+  background-color: var(--section-glass) !important;
+}
+
+html[data-theme='light'] .bg-\[var\(--card-glass\)\] {
+  background-color: var(--card-glass) !important;
+}
+
+/* Light theme: consistent soft shadow for glass cards */
+html[data-theme='light'] [class*="backdrop-blur"][class*="rounded-3xl"] {
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12) !important;
+}
+
+html[data-theme='light'] [class*="backdrop-blur"][class*="rounded-2xl"] {
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.10) !important;
+}
+
+/* Light theme: improve contrast for primary pills that were too dark */
+html[data-theme='light'] .bg-slate-800,
+html[data-theme='light'] .bg-slate-900,
+html[data-theme='light'] .bg-gray-800,
+html[data-theme='light'] .bg-gray-900,
+html[data-theme='light'] .bg-slate-700,
+html[data-theme='light'] .bg-gray-700,
+html[data-theme='light'] .bg-neutral-700,
+html[data-theme='light'] .bg-zinc-700,
+html[data-theme='light'] .bg-neutral-800,
+html[data-theme='light'] .bg-zinc-800 {
+  background-color: rgba(8, 145, 178, 0.18) !important;
+}
+
+/* Light theme: primary dark pills should become clear cyan surfaces */
+html[data-theme='light'] .bg-slate-700,
+html[data-theme='light'] .bg-slate-800,
+html[data-theme='light'] .bg-slate-900,
+html[data-theme='light'] .bg-gray-700,
+html[data-theme='light'] .bg-gray-800,
+html[data-theme='light'] .bg-gray-900,
+html[data-theme='light'] .bg-neutral-700,
+html[data-theme='light'] .bg-neutral-800,
+html[data-theme='light'] .bg-zinc-700,
+html[data-theme='light'] .bg-zinc-800 {
+  background-color: rgba(8, 145, 178, 0.22) !important;
+}
+
+html[data-theme='light'] .hover\:bg-slate-800:hover,
+html[data-theme='light'] .hover\:bg-slate-900:hover,
+html[data-theme='light'] .hover\:bg-gray-800:hover,
+html[data-theme='light'] .hover\:bg-gray-900:hover {
+  background-color: rgba(8, 145, 178, 0.28) !important;
+}
+
+/* Light theme: dark icon circles (burger, arrows) should be readable */
+html[data-theme='light'] .bg-black,
+html[data-theme='light'] .bg-slate-950,
+html[data-theme='light'] .bg-slate-900,
+html[data-theme='light'] .bg-gray-950,
+html[data-theme='light'] .bg-gray-900 {
+  background-color: rgba(8, 145, 178, 0.22) !important;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--page-bg);
+  color: var(--page-fg);
+  transition:
+    background 300ms ease-out,
+    background-color 300ms ease-out,
+    color 300ms ease-out;
+}

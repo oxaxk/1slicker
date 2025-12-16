@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutzerklärung - Slicker Agency</title>
+    <link rel="stylesheet" href="./output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./favicon.png">
+    <link rel="shortcut icon" href="./favicon.png">
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col legal-page">
+    <!-- Header -->
+    <header role="banner" aria-label="Hauptnavigation" class="fixed top-6 left-1/2 -translate-x-1/2 max-w-6xl w-[95%] bg-[#0f1624] backdrop-blur-sm rounded-full shadow-lg z-50">
+      <div class="relative w-full pl-4 pr-6 md:pl-6 md:pr-8 py-4 flex items-center justify-between gap-3 md:gap-6">
+        <a href="index.html" class="flex items-center gap-2 ml-4 md:ml-0" aria-label="Startseite">
+          <div class="text-2xl md:text-3xl font-bold tracking-wider text-primary uppercase" role="heading" aria-level="2">SLICKER</div>
+          <span class="text-xl md:text-2xl text-white uppercase font-light tracking-[0.2em]">AGENCY</span>
+        </a>
+        <div class="flex items-center gap-3 md:gap-6 ml-auto">
+          <nav class="hidden md:flex items-center md:text-[15px] lg:text-[16px] xl:text-[17px] tracking-[0.02em] whitespace-nowrap" style="gap: clamp(18px, 3vw, 40px);">
+            <a href="index.html#about" class="whitespace-nowrap text-white/90 hover:text-primary transition-colors">About</a>
+            <a href="index.html#expertise" class="whitespace-nowrap text-white/90 hover:text-primary transition-colors">Expertise</a>
+            <a href="index.html#projekte" class="whitespace-nowrap text-white/90 hover:text-primary transition-colors">Projekte</a>
+            <a href="index.html#blog" class="whitespace-nowrap text-white/90 hover:text-primary transition-colors">Blog</a>
+          </nav>
+          <a href="index.html#kontakt" class="hidden md:inline-block contact-desktop bg-primary hover:bg-primary/90 text-white px-5 py-2 !rounded-button whitespace-nowrap ml-4">Kontakt</a>
+          <button id="mobileMenuToggle" class="md:hidden w-10 h-10 flex items-center justify-center text-white" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu" type="button">
+            <i class="ri-menu-line ri-lg"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu Overlay (wie Index) -->
+    <div id="mobileMenu" class="mobile-overlay md:hidden" aria-hidden="true">
+      <div class="mobile-overlay__backdrop"></div>
+      <div class="mobile-overlay__panel" role="dialog" aria-modal="true" aria-label="Navigation">
+        <button id="mobileMenuClose" class="mobile-overlay__close" aria-label="Menü schließen"><i class="ri-close-line"></i></button>
+        <nav class="mobile-overlay__nav">
+          <a href="index.html#about">About</a>
+          <a href="index.html#expertise">Expertise</a>
+          <a href="index.html#projekte">Projekte</a>
+          <a href="index.html#blog">Blog</a>
+          <a href="index.html#kontakt" class="cta">Kontakt</a>
+        </nav>
+        <div class="mobile-overlay__footer">
+          <img src="./favicon.png" alt="Slicker" width="36" height="36">
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 pt-32 pb-12 max-w-4xl">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-primary mb-6">Datenschutzerklärung</h1>
+        </div>
+
+        <div class="bg-white rounded shadow-sm p-8">
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">1. Verantwortlicher</h2>
+                <p class="mb-4">Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:</p>
+                <div class="pl-4 border-l-2 border-gray-200 mb-4">
+                    <p>Slicker Agency<br>
+                    Saalmannstraße 9<br>
+                    13403 Berlin<br>
+                    Deutschland</p>
+                    <p class="mt-2">E-Mail: hello@slicker.agency<br>
+                    Telefon: +49 (0) 176 887 105 61</p>
+                </div>
+                <p>Für Datenschutzanfragen wenden Sie sich bitte an: hello@slicker.agency</p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+                <p class="mb-4">Bei Ihrem Besuch auf unserer Website erheben wir automatisch folgende Informationen:</p>
+                <ul class="list-disc pl-6 mb-4">
+                    <li>IP-Adresse</li>
+                    <li>Datum und Uhrzeit der Anfrage</li>
+                    <li>Inhalt der Anforderung (konkrete Seite)</li>
+                    <li>Zugriffsstatus/HTTP-Statuscode</li>
+                    <li>Jeweils übertragene Datenmenge</li>
+                    <li>Website, von der die Anforderung kommt</li>
+                    <li>Browser, Betriebssystem und dessen Oberfläche</li>
+                    <li>Sprache und Version der Browsersoftware</li>
+                </ul>
+                <p>Diese Daten werden zur Gewährleistung eines reibungslosen Verbindungsaufbaus und einer komfortablen Nutzung unserer Website verarbeitet. Die Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).</p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">3. Cookies und Tracking</h2>
+                <p class="mb-4">Unsere Website verwendet Cookies. Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden. Wir unterscheiden zwischen:</p>
+                
+                <h3 class="text-lg font-medium text-gray-800 mb-2">3.1 Technisch notwendige Cookies</h3>
+                <p class="mb-4">Diese Cookies sind für den Betrieb unserer Website erforderlich. Sie ermöglichen grundlegende Funktionen wie die Seitennavigation oder den Zugang zu geschützten Bereichen der Website. Ohne diese Cookies kann unsere Website nicht richtig funktionieren. Die Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).</p>
+                
+                <h3 class="text-lg font-medium text-gray-800 mb-2">3.2 Analyse-Cookies</h3>
+                <p class="mb-4">Wir verwenden Google Analytics, um die Nutzung unserer Website zu analysieren. Google Analytics verwendet Cookies, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website ermöglichen. Die durch das Cookie erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert.</p>
+                <p class="mb-4">Wir haben die IP-Anonymisierung aktiviert, sodass Ihre IP-Adresse von Google innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum zuvor gekürzt wird. Die Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).</p>
+                
+                <h3 class="text-lg font-medium text-gray-800 mb-2">3.3 Marketing-Cookies</h3>
+                <p class="mb-4">Diese Cookies werden verwendet, um Besuchern auf Websites zu folgen. Die Absicht ist, Anzeigen zu zeigen, die relevant und ansprechend für den einzelnen Benutzer sind und daher wertvoller für Publisher und werbetreibende Drittparteien sind. Die Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).</p>
+                
+                <h3 class="text-lg font-medium text-gray-800 mb-2">3.4 Cookie-Einstellungen</h3>
+                <p class="mb-4">Sie können Ihre Cookie-Einstellungen jederzeit anpassen, indem Sie auf den Button "Cookie-Einstellungen" klicken, der am unteren Rand jeder Seite unserer Website verfügbar ist.</p>
+                <div class="mt-4">
+                    <button onclick="openCookieSettings()" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap">Cookie-Einstellungen anpassen</button>
+                </div>
+                <!-- Cookie Consent Modal (index-style) -->
+                <div id="cookie-consent" class="cookie-consent" style="display:none" role="dialog" aria-modal="true" aria-labelledby="cc-title">
+                  <div class="cookie-consent__card">
+                    <div class="cookie-consent__body">
+                      <h3 id="cc-title" class="cookie-consent__title">Cookies & Datenschutz</h3>
+                      <p class="cookie-consent__text">Wir verwenden Cookies, um unsere Website zu verbessern und relevante Inhalte anzuzeigen. Sie können Ihre Auswahl jederzeit anpassen.</p>
+                      <div class="cookie-consent__toggles">
+                        <label><input type="checkbox" checked disabled> Essenzielle Cookies (immer aktiv)</label>
+                        <label><input id="cc-analytics" type="checkbox"> Analyse-Cookies</label>
+                        <label><input id="cc-marketing" type="checkbox"> Marketing-Cookies</label>
+                      </div>
+                      <div class="cookie-consent__actions">
+                        <button id="cc-reject" class="cookie-btn cookie-btn--reject" type="button">Ablehnen</button>
+                        <button id="cc-essential" class="cookie-btn cookie-btn--essential" type="button">Nur essenzielle</button>
+                        <button id="cc-accept" class="cookie-btn cookie-btn--accept" type="button">Alle akzeptieren</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">4. Kontaktformular und E-Mail-Kontakt</h2>
+                <p class="mb-4">Wenn Sie uns per Kontaktformular oder E-Mail kontaktieren, werden die von Ihnen mitgeteilten Daten (Ihre E-Mail-Adresse, ggf. Ihr Name und Ihre Telefonnummer) gespeichert, um Ihre Fragen zu beantworten. Die Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung oder vorvertragliche Maßnahmen) und Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).</p>
+                <p>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Dies ist der Fall, wenn die jeweilige Konversation mit dem Nutzer beendet ist und die Umstände darauf schließen lassen, dass der betroffene Sachverhalt abschließend geklärt ist.</p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">5. Newsletter</h2>
+                <p class="mb-4">Wenn Sie sich für unseren Newsletter anmelden, verwenden wir die von Ihnen angegebene E-Mail-Adresse, um Ihnen regelmäßig unseren Newsletter zuzusenden. Die Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).</p>
+                <p class="mb-4">Für die Anmeldung zu unserem Newsletter verwenden wir das sogenannte Double-Opt-In-Verfahren. Das heißt, dass wir Ihnen nach Ihrer Anmeldung eine E-Mail an die angegebene E-Mail-Adresse senden, in der wir Sie um Bestätigung bitten, dass Sie den Versand des Newsletters wünschen.</p>
+                <p>Sie können den Empfang unseres Newsletters jederzeit kündigen, d.h. Ihre Einwilligungen widerrufen. Einen Link zur Abmeldung vom Newsletter finden Sie am Ende eines jeden Newsletters.</p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">6. Social Media Plugins</h2>
+                <p class="mb-4">Wir setzen auf unserer Website Social Media Plugins der folgenden Anbieter ein:</p>
+                <ul class="list-disc pl-6 mb-4">
+                    <li>Facebook (Anbieter: Meta Platforms Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland)</li>
+                    <li>Twitter/X (Anbieter: Twitter International Company, One Cumberland Place, Fenian Street, Dublin 2, D02 AX07, Irland)</li>
+                    <li>LinkedIn (Anbieter: LinkedIn Ireland Unlimited Company, Wilton Place, Dublin 2, Irland)</li>
+                    <li>Instagram (Anbieter: Meta Platforms Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland)</li>
+                </ul>
+                <p class="mb-4">Die Plugins sind durch das jeweilige Logo der Plattform erkennbar. Wenn Sie eine Seite unseres Webauftritts aufrufen, die ein solches Plugin enthält, stellt Ihr Browser eine direkte Verbindung zu den Servern des jeweiligen Anbieters her. Der Inhalt des Plugins wird vom Anbieter direkt an Ihren Browser übermittelt und in die Seite eingebunden.</p>
+                <p>Durch die Einbindung der Plugins erhält der Anbieter die Information, dass Ihr Browser die entsprechende Seite unseres Webauftritts aufgerufen hat, auch wenn Sie kein Profil besitzen oder gerade nicht eingeloggt sind. Diese Information wird zusammen mit Ihrer IP-Adresse an einen Server des Anbieters übermittelt und dort gespeichert. Die Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).</p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">7. Ihre Rechte als betroffene Person</h2>
+                <p class="mb-4">Sie haben folgende Rechte:</p>
+                <ul class="list-disc pl-6 mb-4">
+                    <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie haben das Recht, Auskunft über Ihre von uns verarbeiteten personenbezogenen Daten zu verlangen.</li>
+                    <li><strong>Recht auf Berichtigung (Art. 16 DSGVO):</strong> Sie haben das Recht, unverzüglich die Berichtigung unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen.</li>
+                    <li><strong>Recht auf Löschung (Art. 17 DSGVO):</strong> Sie haben das Recht, die Löschung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen, soweit nicht die Verarbeitung zur Ausübung des Rechts auf freie Meinungsäußerung und Information, zur Erfüllung einer rechtlichen Verpflichtung, aus Gründen des öffentlichen Interesses oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen erforderlich ist.</li>
+                    <li><strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.</li>
+                    <li><strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie haben das Recht, Ihre personenbezogenen Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten oder die Übermittlung an einen anderen Verantwortlichen zu verlangen.</li>
+                    <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen.</li>
+                    <li><strong>Recht auf Widerruf der datenschutzrechtlichen Einwilligungserklärung (Art. 7 Abs. 3 DSGVO):</strong> Sie haben das Recht, Ihre einmal erteilte Einwilligung jederzeit gegenüber uns zu widerrufen.</li>
+                    <li><strong>Beschwerderecht bei einer Aufsichtsbehörde (Art. 77 DSGVO):</strong> Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren.</li>
+                </ul>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">8. Datensicherheit</h2>
+                <p class="mb-4">Wir verwenden innerhalb des Website-Besuchs das verbreitete SSL-Verfahren (Secure Socket Layer) in Verbindung mit der jeweils höchsten Verschlüsselungsstufe, die von Ihrem Browser unterstützt wird. In der Regel handelt es sich dabei um eine 256-Bit-Verschlüsselung. Falls Ihr Browser keine 256-Bit-Verschlüsselung unterstützt, greifen wir stattdessen auf 128-Bit v3 Technologie zurück. Ob eine einzelne Seite unseres Internetauftrittes verschlüsselt übertragen wird, erkennen Sie an der geschlossenen Darstellung des Schüssel- beziehungsweise Schloss-Symbols in der unteren Statusleiste Ihres Browsers.</p>
+                <p>Wir bedienen uns im Übrigen geeigneter technischer und organisatorischer Sicherheitsmaßnahmen, um Ihre Daten gegen zufällige oder vorsätzliche Manipulationen, teilweisen oder vollständigen Verlust, Zerstörung oder gegen den unbefugten Zugriff Dritter zu schützen. Unsere Sicherheitsmaßnahmen werden entsprechend der technologischen Entwicklung fortlaufend verbessert.</p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-xl font-semibold text-primary mb-4">9. Aktualität und Änderung dieser Datenschutzerklärung</h2>
+                <p class="mb-4">Diese Datenschutzerklärung ist aktuell gültig und hat den Stand: Mai 2025.</p>
+                <p>Durch die Weiterentwicklung unserer Website und Angebote darüber oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf der Website unter <a href="#" class="text-primary hover:underline">https://www.slicker-agency.de/datenschutz</a> von Ihnen abgerufen und ausgedruckt werden.</p>
+            </section>
+
+            <div class="legal-divider"></div>
+
+            <section class="mb-6">
+                <h2 class="text-xl font-semibold mb-4">Rechtliche Hinweise & Schutzvermerk (Anti-Abmahn-Klausel)</h2>
+                <p class="mb-4">Die Inhalte dieser Website, insbesondere unsere Artikel, Beiträge und Aussagen auf dem Blog („Adagacin-Artikel"), dienen ausschließlich der allgemeinen Information. Trotz sorgfältiger Recherche übernehmen wir keine Gewähr für Richtigkeit, Vollständigkeit oder Aktualität der dargestellten Informationen. Eine individuelle Beratung wird durch unsere Inhalte nicht ersetzt.</p>
+                <p class="mb-4">Die Nutzung sämtlicher Inhalte erfolgt auf eigene Verantwortung.
+                Eine Haftung für Schäden, die aus der Nutzung dieser Website oder einzelner Inhalte entstehen, ist ausgeschlossen, es sei denn, sie beruhen auf Vorsatz oder grober Fahrlässigkeit durch den Anbieter.</p>
+                <p>Wir behalten uns ausdrücklich vor, Inhalte jederzeit zu ändern, zu löschen oder zu ergänzen – ohne gesonderte Vorankündigung.</p>
+            </section>
+
+            <div class="legal-divider"></div>
+
+            <section class="mb-6">
+                <h2 class="flex items-center text-xl font-semibold mb-4">
+                    <span class="w-6 h-6 flex items-center justify-center mr-2 text-primary"><i class="ri-robot-line"></i></span>
+                    Nutzung von KI-generierten Inhalten & Bildmaterial
+                </h2>
+                <p class="mb-4">Ein Teil der auf dieser Website veröffentlichten Inhalte (Texte, Bilder, Layouts) wurde mithilfe von künstlicher Intelligenz (KI) generiert oder unterstützt.
+                Dabei kommen ausschließlich Tools zum Einsatz, die urheberrechtlich freie oder lizenzkonforme Nutzung gestatten (z. B. OpenAI, Midjourney, Readdy.ai, eigene Lizenzen).</p>
+                <p>Alle Bildrechte und Nutzungsrechte liegen entweder beim Anbieter oder wurden ordnungsgemäß erworben. Sollten Sie dennoch eine Urheberrechtsverletzung vermuten, bitten wir um einen Hinweis ohne Kostennote – wir werden entsprechende Inhalte umgehend entfernen.</p>
+            </section>
+
+            <div class="legal-divider"></div>
+
+            <section>
+                <h2 class="flex items-center text-xl font-semibold mb-4">
+                    <span class="w-6 h-6 flex items-center justify-center mr-2 text-primary"><i class="ri-forbid-line"></i></span>
+                    Hinweis zur Abmahnung ohne vorherige Kontaktaufnahme
+                </h2>
+                <p class="mb-4">Im Falle von wettbewerbsrechtlichen, urheberrechtlichen oder ähnlichen Problemen bitten wir Sie, uns unverzüglich und ohne Einschaltung eines Anwalts zu kontaktieren.</p>
+                <p>Abmahnungen ohne vorherige Kontaktaufnahme mit dem Anbieter werden im Sinne der Schadensminderungspflicht (§ 254 BGB) als unbegründet zurückgewiesen.
+                Wir erklären uns ausdrücklich bereit, strittige Inhalte oder Verstöße sofort zu prüfen und ggf. zu korrigieren, ohne dass die Einschaltung eines Rechtsbeistands erforderlich ist.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
+          <div class="lg:col-span-4">
+            <div class="flex items-center gap-3 mb-8">
+              <h1 class="text-3xl md:text-4xl font-bold tracking-wider text-primary uppercase">SLICKER</h1>
+              <span class="text-2xl md:text-3xl text-white uppercase font-light tracking-[0.2em]">AGENCY</span>
+            </div>
+            <p class="text-gray-400 mb-8 text-lg">Die Verbindung von Design und technischer Innovation schafft neue Möglichkeiten im digitalen Raum.</p>
+            <div class="flex space-x-4">
+              <a href="https://www.instagram.com/slicker.agency/" class="w-12 h-12 flex items-center justify-center bg-gray-800 hover:bg-primary rounded-full transition-colors" target="_blank" rel="noopener noreferrer">
+                <i class="ri-instagram-fill ri-xl"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2">
+            <h3 class="text-xl font-semibold mb-6 pl-6">Leistungen</h3>
+            <ul class="space-y-4">
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Webdesign & Entwicklung</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Digital Marketing</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>KI-Automation</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Growth Architecture</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>App-Entwicklung</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>E-Commerce</a></li>
+            </ul>
+          </div>
+
+          <div class="lg:col-span-2">
+            <h3 class="text-xl font-semibold mb-6 pl-6">Unternehmen</h3>
+            <ul class="space-y-4">
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Über uns</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Projekte</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Blog</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Karriere</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Kontakt</a></li>
+              <li><a href="impressum.html" class="text-primary hover:text-white transition-colors flex items-center gap-2"><i class="ri-arrow-right-s-line"></i>Impressum</a></li>
+            </ul>
+          </div>
+
+          <div class="lg:col-span-4">
+            <h3 class="text-xl font-semibold mb-6">Newsletter</h3>
+            <p class="text-gray-400 mb-6 text-lg">Abonnieren Sie unseren Newsletter für die neuesten Updates und Einblicke.</p>
+            <form class="mb-8">
+              <div class="flex">
+                <input type="email" placeholder="Ihre E-Mail-Adresse" class="w-full px-4 py-3 bg-gray-800 border-none rounded-l focus:outline-none focus:ring-2 focus:ring-primary text-white text-lg">
+                <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-r !rounded-button whitespace-nowrap text-lg">Abonnieren</button>
+              </div>
+            </form>
+            <div class="flex items-center space-x-6">
+              <div class="w-12 h-12 flex items-center justify-center">
+                <i class="ri-visa-fill ri-2x text-gray-400"></i>
+              </div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <i class="ri-mastercard-fill ri-2x text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm mb-4 md:mb-0">&copy; 2025 Slicker Agency. Alle Rechte vorbehalten.</p>
+            <div class="flex space-x-6">
+              <a href="impressum.html" class="text-gray-500 hover:text-white text-sm transition-colors">Impressum</a>
+              <a href="datenschutz.html" class="text-primary hover:text-white text-sm transition-colors">Datenschutz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Toggle mobile menu overlay (full-screen, pure JS)
+      const menuButton = document.getElementById('mobileMenuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeBtn = document.getElementById('mobileMenuClose');
+      function lockScroll(){ document.body.style.overflow='hidden'; }
+      function unlockScroll(){ document.body.style.overflow=''; }
+      function openMenu(){
+        if (!mobileMenu) return;
+        mobileMenu.classList.add('open');
+        mobileMenu.setAttribute('aria-hidden','false');
+        if (menuButton) menuButton.setAttribute('aria-expanded','true');
+        lockScroll();
+        var firstLink = mobileMenu.querySelector('.mobile-overlay__nav a');
+        if (firstLink && firstLink.focus) firstLink.focus();
+      }
+      function closeMenu(){
+        if (!mobileMenu) return;
+        mobileMenu.classList.remove('open');
+        mobileMenu.setAttribute('aria-hidden','true');
+        if (menuButton) menuButton.setAttribute('aria-expanded','false');
+        unlockScroll();
+        if (menuButton && menuButton.focus) menuButton.focus();
+      }
+      if (menuButton && mobileMenu) {
+        menuButton.addEventListener('click', function(e){
+          e.preventDefault();
+          if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+        });
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeMenu(); });
+        }
+        // Close when clicking backdrop
+        mobileMenu.addEventListener('click', function(e){
+          var t = e.target;
+          if (t && t.classList && t.classList.contains('mobile-overlay__backdrop')) { closeMenu(); }
+        });
+        // Close on link click inside overlay
+        mobileMenu.querySelectorAll('.mobile-overlay__nav a').forEach(function(a){ a.addEventListener('click', function(){ closeMenu(); }); });
+        // ESC to close
+        window.addEventListener('keydown', function(e){ if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu(); });
+      }
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (!href || href === '#') return;
+          // Nur innerhalb dieser Seite smooth scrollen
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+              if (mobileMenu && mobileMenu.classList.contains('open')) closeMenu();
+            }
+          }
+        });
+      });
+    });
+    </script>
+    <script>
+      function openCookieSettings() {
+        const el = document.getElementById('cookie-consent');
+        if (!el) return;
+        el.classList.add('open');
+        el.style.display = 'flex';
+        el.setAttribute('aria-hidden','false');
+      }
+
+      function closeCookieSettings() {
+        const el = document.getElementById('cookie-consent');
+        if (!el) return;
+        el.classList.remove('open');
+        el.style.display = 'none';
+        el.setAttribute('aria-hidden','true');
+      }
+
+      function saveCookieSettings() {
+        const analytics = document.getElementById('cc-analytics') ? document.getElementById('cc-analytics').checked : false;
+        const marketing = document.getElementById('cc-marketing') ? document.getElementById('cc-marketing').checked : false;
+        try {
+          localStorage.setItem('cookieConsent', JSON.stringify({ choices: { analytics, marketing }, ts: Date.now() }));
+        } catch (e) {}
+        closeCookieSettings();
+      }
+
+      // Wire buttons inside the modal
+      document.addEventListener('DOMContentLoaded', function(){
+        var reject = document.getElementById('cc-reject');
+        var essential = document.getElementById('cc-essential');
+        var accept = document.getElementById('cc-accept');
+        var a = document.getElementById('cc-analytics');
+        var m = document.getElementById('cc-marketing');
+        if (reject) reject.addEventListener('click', function(){ if(a) a.checked = false; if(m) m.checked = false; saveCookieSettings(); });
+        if (essential) essential.addEventListener('click', function(){ if(a) a.checked = false; if(m) m.checked = false; saveCookieSettings(); });
+        if (accept) accept.addEventListener('click', function(){ if(a) a.checked = true; if(m) m.checked = true; saveCookieSettings(); });
+      });
+    </script>
+</body>
+</html>

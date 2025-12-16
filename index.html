@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Slicker Agency – Webdesign, E‑Commerce & KI in Berlin</title>
+    <meta name="description" content="Wir entwickeln schnelle Websites & Shops mit KI‑Automation. Strategie, Design, Umsetzung – messbar skalierbar in Berlin.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Slicker Agency – Webdesign, E‑Commerce & KI in Berlin">
+    <meta property="og:description" content="Schnelle Websites & Shops mit KI‑Automation – Strategie, Design, Umsetzung.">
+    <meta property="og:image" content="https://slicker.agency/assets/img/slicker1.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Slicker Agency – Logo">
+    <meta property="og:url" content="https://slicker.agency/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Slicker Agency">
+    <meta property="og:locale" content="de_DE">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Slicker Agency – Webdesign, E‑Commerce & KI in Berlin">
+    <meta name="twitter:description" content="Schnelle Websites & Shops mit KI‑Automation – Strategie, Design, Umsetzung.">
+    <meta name="twitter:image" content="https://slicker.agency/assets/img/slicker1.png">
+
+    <!-- Canonical & Sitemap -->
+    <link rel="canonical" href="https://slicker.agency/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <!-- Main CSS from der ursprünglichen statischen Version (kann später durch Vite/Tailwind ersetzt werden) -->
+    <link rel="stylesheet" href="./output.css">
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Organization",
+      "name":"Slicker Agency",
+      "url":"https://slicker.agency/",
+      "logo":"https://slicker.agency/favicon.png",
+      "sameAs":["https://www.instagram.com/slicker.agency/"],
+      "contactPoint":[{
+        "@type":"ContactPoint",
+        "telephone":"+49-176-88710561",
+        "contactType":"customer service",
+        "areaServed":"DE",
+        "availableLanguage":["de","en"]
+      }],
+      "address":{
+        "@type":"PostalAddress",
+        "streetAddress":"Saalmannstraße 9",
+        "postalCode":"13403",
+        "addressLocality":"Berlin",
+        "addressCountry":"DE"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "url":"https://slicker.agency/",
+      "name":"Slicker Agency",
+      "potentialAction":{
+        "@type":"SearchAction",
+        "target":"https://slicker.agency/?s={search_term_string}",
+        "query-input":"required name=search_term_string"
+      }
+    }
+    </script>
+    <!-- Third-party fonts/icons are loaded only after consent (DE/EU friendly). -->
+    <script>
+      (function () {
+        try {
+          var c1 = localStorage.getItem('cookie-consent-v1');
+          var c2 = localStorage.getItem('slicker_cookie_consent');
+          var accepted = c1 === 'accepted' || c2 === 'accepted' || c2 === 'all' || c2 === 'true';
+          if (!accepted) return;
+
+          var head = document.head;
+
+          // Google Fonts (Manrope + Inter)
+          var gf1 = document.createElement('link');
+          gf1.rel = 'preconnect';
+          gf1.href = 'https://fonts.googleapis.com';
+          head.appendChild(gf1);
+
+          var gf2 = document.createElement('link');
+          gf2.rel = 'preconnect';
+          gf2.href = 'https://fonts.gstatic.com';
+          gf2.crossOrigin = 'anonymous';
+          head.appendChild(gf2);
+
+          var gf3 = document.createElement('link');
+          gf3.rel = 'stylesheet';
+          gf3.href = 'https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap';
+          head.appendChild(gf3);
+
+          // Icon fonts (Font Awesome + Remixicon)
+          var fa = document.createElement('link');
+          fa.rel = 'stylesheet';
+          fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+          head.appendChild(fa);
+
+          var ri = document.createElement('link');
+          ri.rel = 'stylesheet';
+          ri.href = 'https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css';
+          head.appendChild(ri);
+        } catch (e) {
+          // no-op
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
