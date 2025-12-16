@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useInRouterContext } from 'react-router-dom';
 
 type ConsentStatus = 'accepted' | 'rejected' | 'unset';
 
@@ -67,6 +68,8 @@ export default function CookieBanner() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(true);
+
+  const inRouter = useInRouterContext();
 
   useEffect(() => {
     if (__cookieBannerActiveInstance) {
@@ -157,13 +160,53 @@ export default function CookieBanner() {
           Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. 
           Optionale Cookies für Statistik oder Marketing setzen wir nur, wenn du zustimmst. 
           Details findest du in unserer&nbsp;
-          <a href="/datenschutz" className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100">
-            Datenschutzerklärung
-          </a>
+          {inRouter ? (
+            <Link
+              to="/datenschutz"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+            >
+              Datenschutzerklärung
+            </Link>
+          ) : (
+            <a
+              href="/datenschutz"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+            >
+              Datenschutzerklärung
+            </a>
+          )}
           &nbsp;und in den&nbsp;
-          <a href="/cookie" className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100">
-            Cookie-Einstellungen
-          </a>
+          {inRouter ? (
+            <Link
+              to="/cookie"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+            >
+              Cookie-Einstellungen
+            </Link>
+          ) : (
+            <a
+              href="/cookie"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+            >
+              Cookie-Einstellungen
+            </a>
+          )}
           .
         </p>
 
