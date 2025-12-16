@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
 type ConsentStatus = 'accepted' | 'rejected' | 'unset';
 
@@ -65,6 +64,7 @@ export default function CookieBanner() {
   // Consent-Status (accepted / rejected / unset)
   const [status, setStatus] = useState<ConsentStatus>(() => getInitialStatus());
   // Sichtbarkeit des Banners separat steuern
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(true);
 
@@ -97,10 +97,15 @@ export default function CookieBanner() {
   useEffect(() => {
     const onOpen = () => {
       setIsOpen(true);
+      setIsVisible(true);
     };
     window.addEventListener('open-cookie-banner', onOpen);
     return () => window.removeEventListener('open-cookie-banner', onOpen);
   }, []);
+
+  useEffect(() => {
+    setIsVisible(isOpen);
+  }, [isOpen]);
 
   const handleAccept = () => {
     try {
@@ -152,13 +157,13 @@ export default function CookieBanner() {
           Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. 
           Optionale Cookies für Statistik oder Marketing setzen wir nur, wenn du zustimmst. 
           Details findest du in unserer&nbsp;
-          <Link to="/datenschutz" className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100">
+          <a href="/datenschutz" className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100">
             Datenschutzerklärung
-          </Link>
+          </a>
           &nbsp;und in den&nbsp;
-          <Link to="/cookie" className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100">
+          <a href="/cookie" className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100">
             Cookie-Einstellungen
-          </Link>
+          </a>
           .
         </p>
 
