@@ -125,107 +125,133 @@ export default function CookieBanner() {
     // Hier sicherstellen: keine optionalen Cookies / Tracker laden.
   };
 
+  const openCookieSettings = () => {
+    setIsOpen(true);
+  };
+
   if (!isActive) return null;
-  if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-black/60 dark:bg-black/60"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div
-        className="w-full sm:max-w-xl mx-4 mb-4 sm:mb-0 rounded-3xl backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--section-glass)] dark:bg-black/75 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-5 sm:p-6"
+    <>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openCookieSettings();
+        }}
+        aria-label="Cookie-Einstellungen öffnen"
+        className="fixed bottom-5 right-5 z-[9999] w-12 h-12 rounded-full border border-white/20 bg-black/55 backdrop-blur-xl shadow-[0_14px_40px_rgba(15,23,42,0.65)] hover:border-[#22d3ee]/60 hover:shadow-[0_0_18px_rgba(34,211,238,0.55)] transition"
       >
-        <h2
-          className="text-base sm:text-lg font-semibold mb-2 text-[color:var(--page-fg)]"
-          style={{ fontFamily: 'Inter, sans-serif' }}
-        >
-          Cookies &amp; Datenschutz
-        </h2>
-        <p
-          className="text-xs sm:text-sm mb-4 text-[color:var(--page-fg)] opacity-75"
-          style={{ fontFamily: 'Inter, sans-serif' }}
-        >
-          Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. 
-          Optionale Cookies für Statistik oder Marketing setzen wir nur, wenn du zustimmst. 
-          Details findest du in unserer&nbsp;
-          {inRouter ? (
-            <Link
-              to="/datenschutz"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsOpen(false);
-              }}
-              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-            >
-              Datenschutzerklärung
-            </Link>
-          ) : (
-            <a
-              href="/datenschutz"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsOpen(false);
-              }}
-              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-            >
-              Datenschutzerklärung
-            </a>
-          )}
-          &nbsp;und in den&nbsp;
-          {inRouter ? (
-            <Link
-              to="/cookie"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsOpen(false);
-              }}
-              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-            >
-              Cookie-Einstellungen
-            </Link>
-          ) : (
-            <a
-              href="/cookie"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsOpen(false);
-              }}
-              className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-            >
-              Cookie-Einstellungen
-            </a>
-          )}
-          .
-        </p>
+        <span className="sr-only">Cookie-Einstellungen</span>
+        <img
+          src="/images/cookie.png"
+          alt=""
+          className="mx-auto h-6 w-6 opacity-95"
+          draggable={false}
+        />
+      </button>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleReject();
-            }}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-[rgba(15,23,42,0.14)] dark:border-white/30 text-[color:var(--page-fg)] bg-[var(--card-glass)] dark:bg-white/5 hover:bg-[rgba(8,145,178,0.22)] dark:hover:bg-white/10 transition-colors"
-            style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-black/60 dark:bg-black/60"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div
+            className="w-full sm:max-w-xl mx-4 mb-4 sm:mb-0 rounded-3xl backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--section-glass)] dark:bg-black/75 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-5 sm:p-6"
           >
-            Nur notwendige Cookies
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleAccept();
-            }}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-[#22d3ee] text-[#06121f] shadow-[0_18px_40px_rgba(34,211,238,0.45)] hover:bg-[#38e0ff] transition-colors"
-            style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
-          >
-            Alle akzeptieren
-          </button>
+            <h2
+              className="text-base sm:text-lg font-semibold mb-2 text-[color:var(--page-fg)]"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              Cookies &amp; Datenschutz
+            </h2>
+            <p
+              className="text-xs sm:text-sm mb-4 text-[color:var(--page-fg)] opacity-75"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. 
+              Optionale Cookies für Statistik oder Marketing setzen wir nur, wenn du zustimmst. 
+              Details findest du in unserer&nbsp;
+              {inRouter ? (
+                <Link
+                  to="/datenschutz"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(false);
+                  }}
+                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+                >
+                  Datenschutzerklärung
+                </Link>
+              ) : (
+                <a
+                  href="/datenschutz"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(false);
+                  }}
+                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+                >
+                  Datenschutzerklärung
+                </a>
+              )}
+              &nbsp;und in den&nbsp;
+              {inRouter ? (
+                <Link
+                  to="/cookie"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(false);
+                  }}
+                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+                >
+                  Cookie-Einstellungen
+                </Link>
+              ) : (
+                <a
+                  href="/cookie"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(false);
+                  }}
+                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
+                >
+                  Cookie-Einstellungen
+                </a>
+              )}
+              .
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleReject();
+                }}
+                className="w-full sm:w-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-[rgba(15,23,42,0.14)] dark:border-white/30 text-[color:var(--page-fg)] bg-[var(--card-glass)] dark:bg-white/5 hover:bg-[rgba(8,145,178,0.22)] dark:hover:bg-white/10 transition-colors"
+                style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
+              >
+                Nur notwendige Cookies
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleAccept();
+                }}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-[#22d3ee] text-[#06121f] shadow-[0_18px_40px_rgba(34,211,238,0.45)] hover:bg-[#38e0ff] transition-colors"
+                style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
+              >
+                Alle akzeptieren
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
