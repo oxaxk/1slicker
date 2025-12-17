@@ -212,7 +212,22 @@ const TeamSection = () => {
                                 <p className="font-medium text-[color:var(--page-fg)] text-sm mt-1">
                                   {faq.question}
                                 </p>
-                                <span className="flex items-center justify-center w-7 h-7 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/25 bg-[var(--card-glass)] dark:bg-white/5 text-[color:var(--page-fg)] text-xs mt-1 transition-all duration-200 group-hover:border-[#22d3ee] group-hover:shadow-[0_0_16px_rgba(34,211,238,0.9)]">
+                                <span
+                                  role="button"
+                                  tabIndex={0}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenFaqIndex(isOpen ? null : realIndex);
+                                  }}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      setOpenFaqIndex(isOpen ? null : realIndex);
+                                    }
+                                  }}
+                                  className="cursor-pointer flex items-center justify-center w-7 h-7 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/25 bg-[var(--card-glass)] dark:bg-white/5 text-[color:var(--page-fg)] text-xs mt-1 transition-all duration-200 group-hover:border-[#22d3ee] group-hover:shadow-[0_0_16px_rgba(34,211,238,0.9)]"
+                                >
                                   <Icon
                                     name="chevDown"
                                     className={`w-[18px] h-[18px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -221,16 +236,16 @@ const TeamSection = () => {
                               </div>
                               <div
                                 className={
-                                  "mt-2 overflow-hidden transition-[max-height,opacity,transform] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] will-change-[max-height,opacity,transform] motion-reduce:transition-none " +
-                                  (isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1")
+                                  "mt-2 grid overflow-hidden transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none " +
+                                  (isOpen ? "opacity-100" : "opacity-0")
                                 }
-                                style={{ maxHeight: isOpen ? '220px' : '0px' }}
+                                style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
                                 aria-hidden={!isOpen}
                               >
-                                <div
-                                  className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed"
-                                >
-                                  <p>{faq.answer}</p>
+                                <div className="min-h-0 overflow-hidden">
+                                  <div className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
+                                    <p>{faq.answer}</p>
+                                  </div>
                                 </div>
                               </div>
                             </button>
@@ -276,7 +291,22 @@ const TeamSection = () => {
                         <p className="font-medium text-[color:var(--page-fg)] text-sm md:text-[0.95rem] mt-1">
                           {faq.question}
                         </p>
-                        <span className="flex items-center justify-center w-7 h-7 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/25 bg-[var(--card-glass)] dark:bg-white/5 text-[color:var(--page-fg)] text-xs md:text-sm mt-1 transition-all duration-200 group-hover:border-[#22d3ee] group-hover:shadow-[0_0_16px_rgba(34,211,238,0.9)]">
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenFaqIndex(isOpen ? null : index);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setOpenFaqIndex(isOpen ? null : index);
+                            }
+                          }}
+                          className="cursor-pointer flex items-center justify-center w-7 h-7 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/25 bg-[var(--card-glass)] dark:bg-white/5 text-[color:var(--page-fg)] text-xs md:text-sm mt-1 transition-all duration-200 group-hover:border-[#22d3ee] group-hover:shadow-[0_0_16px_rgba(34,211,238,0.9)]"
+                        >
                           <Icon
                             name="chevDown"
                             className={`w-[18px] h-[18px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -285,16 +315,16 @@ const TeamSection = () => {
                       </div>
                       <div
                         className={
-                          "mt-2 overflow-hidden transition-[max-height,opacity,transform] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] will-change-[max-height,opacity,transform] motion-reduce:transition-none " +
-                          (isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1")
+                          "mt-2 grid overflow-hidden transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none " +
+                          (isOpen ? "opacity-100" : "opacity-0")
                         }
-                        style={{ maxHeight: isOpen ? '220px' : '0px' }}
+                        style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
                         aria-hidden={!isOpen}
                       >
-                        <div
-                          className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-70 leading-relaxed"
-                        >
-                          <p>{faq.answer}</p>
+                        <div className="min-h-0 overflow-hidden">
+                          <div className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
+                            <p>{faq.answer}</p>
+                          </div>
                         </div>
                       </div>
                     </button>
