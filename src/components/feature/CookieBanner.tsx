@@ -142,7 +142,7 @@ export default function CookieBanner() {
           openCookieSettings();
         }}
         aria-label="Cookie-Einstellungen öffnen"
-        className="fixed right-5 bottom-[92px] sm:bottom-5 z-[9999] w-12 h-12 rounded-full border border-white/20 bg-black/55 backdrop-blur-xl shadow-[0_14px_40px_rgba(15,23,42,0.65)] hover:border-[#22d3ee]/60 hover:shadow-[0_0_18px_rgba(34,211,238,0.55)] transition"
+        className="fixed right-5 bottom-[calc(env(safe-area-inset-bottom)+20px)] sm:bottom-5 z-[9999] w-12 h-12 rounded-full border border-white/20 bg-black/55 backdrop-blur-xl shadow-[0_14px_40px_rgba(15,23,42,0.65)] hover:border-[#22d3ee]/60 hover:shadow-[0_0_18px_rgba(34,211,238,0.55)] transition"
       >
         <span className="sr-only">Cookie-Einstellungen</span>
         <img
