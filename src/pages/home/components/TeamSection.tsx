@@ -200,7 +200,7 @@ const TeamSection = () => {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div
-          className="rounded-[28px] md:rounded-[32px] backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/10 shadow-[0_24px_80px_rgba(15,23,42,0.16)] px-6 sm:px-10 lg:px-12 py-10 md:py-12"
+          className="rounded-[28px] md:rounded-[32px] backdrop-blur-none md:backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/10 shadow-[0_12px_40px_rgba(15,23,42,0.14)] md:shadow-[0_24px_80px_rgba(15,23,42,0.16)] px-6 sm:px-10 lg:px-12 py-10 md:py-12"
           style={{ background: 'var(--section-glass)' }}
         >
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-14">
