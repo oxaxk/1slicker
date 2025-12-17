@@ -65,6 +65,15 @@ export default function CookieBanner() {
   // Sichtbarkeit des Banners separat steuern
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // Guard: prevent multiple CookieBanner instances (double-render makes close look like it needs 2 clicks)
+  const [isPrimaryInstance] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const w = window as any;
+    if (w.__slickerCookieBannerMounted) return false;
+    w.__slickerCookieBannerMounted = true;
+    return true;
+  });
+
   const inRouter = useInRouterContext();
 
   useEffect(() => {
@@ -72,6 +81,16 @@ export default function CookieBanner() {
     setStatus(initial);
     setIsOpen(initial === 'unset');
   }, []);
+
+  useEffect(() => {
+    if (!isPrimaryInstance) return;
+    return () => {
+      const w = window as any;
+      if (w.__slickerCookieBannerMounted) {
+        w.__slickerCookieBannerMounted = false;
+      }
+    };
+  }, [isPrimaryInstance]);
 
   // Tracking-Skripte automatisch laden, wenn Consent akzeptiert wurde
   useEffect(() => {
@@ -95,7 +114,6 @@ export default function CookieBanner() {
       // ignore storage errors
     }
     setStatus('accepted');
-    setIsOpen(false);
   };
 
   const handleReject = () => {
@@ -105,13 +123,14 @@ export default function CookieBanner() {
       // ignore storage errors
     }
     setStatus('rejected');
-    setIsOpen(false);
     // Hier sicherstellen: keine optionalen Cookies / Tracker laden.
   };
 
   const openCookieSettings = () => {
     setIsOpen(true);
   };
+
+  if (!isPrimaryInstance) return null;
 
   return (
     <>
@@ -140,6 +159,9 @@ export default function CookieBanner() {
           onClick={(e) => e.stopPropagation()}
         >
           <div
+            onPointerDown={(e) => {
+              e.stopPropagation();
+            }}
             className="w-full sm:max-w-xl mx-4 mb-4 sm:mb-0 rounded-3xl backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--section-glass)] dark:bg-black/75 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-5 sm:p-6"
           >
             <h2
@@ -208,9 +230,11 @@ export default function CookieBanner() {
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
               <button
                 type="button"
-                onClick={(e) => {
+                onPointerDown={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
+                  // close immediately on touch, then persist
+                  setIsOpen(false);
                   handleReject();
                 }}
                 className="w-full sm:w-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-[rgba(15,23,42,0.14)] dark:border-white/30 text-[color:var(--page-fg)] bg-[var(--card-glass)] dark:bg-white/5 hover:bg-[rgba(8,145,178,0.22)] dark:hover:bg-white/10 transition-colors"
@@ -220,9 +244,11 @@ export default function CookieBanner() {
               </button>
               <button
                 type="button"
-                onClick={(e) => {
+                onPointerDown={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
+                  // close immediately on touch, then persist
+                  setIsOpen(false);
                   handleAccept();
                 }}
                 className="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-[#22d3ee] text-[#06121f] shadow-[0_18px_40px_rgba(34,211,238,0.45)] hover:bg-[#38e0ff] transition-colors"
