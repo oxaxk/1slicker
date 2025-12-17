@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function Header() {
   const Icon = ({ name, className }: { name: 'whatsapp' | 'mail' | 'tiktok' | 'instagram' | 'facebook' | 'linkedin' | 'moon' | 'sun' | 'menu' | 'close' | 'phone' | 'arrowDown'; className?: string }) => {
@@ -115,6 +116,9 @@ export default function Header() {
   const lastScrollYRef = useRef(0);
   const [isDarkMode, setIsDarkMode] = useState(true);
 
+  const socialsBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [socialsPos, setSocialsPos] = useState<{ top: number; left: number } | null>(null);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -157,6 +161,77 @@ export default function Header() {
     setIsDarkMode(initialTheme === 'dark');
     document.documentElement.setAttribute('data-theme', initialTheme);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    const scrollToHash = () => {
+      const raw = window.location.hash || '';
+      const id = raw.startsWith('#') ? raw.slice(1) : raw;
+      if (!id) return;
+
+      const targetId = decodeURIComponent(id);
+
+      let attempts = 0;
+      const maxAttempts = 20; // ~2s
+
+      const tryScroll = () => {
+        const el =
+          document.getElementById(targetId) ||
+          document.querySelector(`#${CSS.escape(targetId)}`) ||
+          document.querySelector(`[data-section="${CSS.escape(targetId)}"]`) ||
+          document.querySelector(`[data-anchor="${CSS.escape(targetId)}"]`);
+        if (el instanceof HTMLElement) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setIsMenuOpen(false);
+          setIsSocialsOpen(false);
+          return;
+        }
+
+        attempts += 1;
+        if (attempts < maxAttempts) {
+          window.setTimeout(tryScroll, 100);
+        }
+      };
+
+      // Try immediately, then retry while the homepage mounts
+      tryScroll();
+    };
+
+    // run on first load (e.g. after hard navigation to /#kontakt)
+    scrollToHash();
+
+    // also run on hash changes
+    window.addEventListener('hashchange', scrollToHash);
+    return () => window.removeEventListener('hashchange', scrollToHash);
+  }, []);
+
+  useEffect(() => {
+    if (!isSocialsOpen) {
+      setSocialsPos(null);
+      return;
+    }
+    if (typeof window === 'undefined') return;
+
+    const update = () => {
+      const btn = socialsBtnRef.current;
+      if (!btn) return;
+      const r = btn.getBoundingClientRect();
+      // dropdown aligned to button right edge
+      setSocialsPos({
+        top: r.bottom + 12,
+        left: Math.max(12, r.right - 240) // 240 ~ dropdown width
+      });
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [isSocialsOpen]);
 
   useEffect(() => {
     if (!isMenuOpen && !isSocialsOpen) return;
@@ -257,7 +332,7 @@ export default function Header() {
       aria-label="Hauptnavigation"
     >
       <div
-        className="relative w-full pl-5 pr-6 md:pl-7 md:pr-10 lg:pr-12 py-4 flex items-center justify-between gap-3 md:gap-6 backdrop-blur-2xl border border-white/10 rounded-full overflow-hidden bg-[var(--section-glass)] dark:bg-black/35 shadow-[0_20px_60px_rgba(15,23,42,0.18)]"
+        className="relative w-full pl-5 pr-6 md:pl-7 md:pr-10 lg:pr-12 py-4 flex items-center justify-between gap-3 md:gap-6 backdrop-blur-2xl border border-white/10 rounded-full overflow-visible bg-[var(--section-glass)] dark:bg-black/35 shadow-[0_20px_60px_rgba(15,23,42,0.18)]"
       >
         {/* Logo */}
         <a
@@ -336,75 +411,20 @@ export default function Header() {
             <div
               className="relative"
               onMouseEnter={() => setIsSocialsOpen(true)}
+              onMouseLeave={() => setIsSocialsOpen(false)}
             >
               <button
+                ref={socialsBtnRef}
                 type="button"
                 className="nav-link text-white/80 hover:text-[#22d3ee] transition-colors uppercase tracking-[0.12em]"
+                onClick={() => setIsSocialsOpen((v) => !v)}
               >
                 Socials
               </button>
-              {isSocialsOpen && (
-                <div className="absolute right-0 mt-3 rounded-2xl bg-black/70 backdrop-blur-2xl border border-white/15 shadow-[0_18px_40px_rgba(15,23,42,0.9)] px-4 py-3">
-                  <div className="flex gap-2">
-                    <a
-                      href="https://wa.me/4915511207431"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="WhatsApp"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#25D366]/20 hover:border-[#25D366] hover:shadow-[0_0_14px_rgba(37,211,102,0.9)] text-white text-sm transition-colors duration-150"
-                    >
-                      <Icon name="whatsapp" className="w-[18px] h-[18px]" />
-                    </a>
-                    <a
-                      href="mailto:info@slicker.agency"
-                      aria-label="E-Mail"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#22d3ee]/18 hover:border-[#22d3ee] hover:shadow-[0_0_14px_rgba(34,211,238,0.9)] text-white text-sm transition-colors duration-150"
-                    >
-                      <Icon name="mail" className="w-[18px] h-[18px]" />
-                    </a>
-                    <a
-                      href="https://www.tiktok.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="TikTok"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#ff0050]/18 hover:border-[#ff0050] hover:shadow-[0_0_14px_rgba(255,0,80,0.9)] text-white text-sm transition-colors duration-150"
-                    >
-                      <Icon name="tiktok" className="w-[18px] h-[18px]" />
-                    </a>
-                    <a
-                      href="https://www.instagram.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Instagram"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#E1306C]/18 hover:border-[#E1306C] hover:shadow-[0_0_14px_rgba(225,48,108,0.9)] text-white text-sm transition-colors duration-150"
-                    >
-                      <Icon name="instagram" className="w-[18px] h-[18px]" />
-                    </a>
-                    <a
-                      href="https://www.facebook.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Facebook"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#1877F2]/18 hover:border-[#1877F2] hover:shadow-[0_0_14px_rgba(24,119,242,0.9)] text-white text-sm transition-colors duration-150"
-                    >
-                      <Icon name="facebook" className="w-[18px] h-[18px]" />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="LinkedIn"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#0A66C2]/18 hover:border-[#0A66C2] hover:shadow-[0_0_14px_rgba(10,102,194,0.9)] text-white text-sm transition-colors duration-150"
-                    >
-                      <Icon name="linkedin" className="w-[18px] h-[18px]" />
-                    </a>
-                  </div>
-                </div>
-              )}
             </div>
           </nav>
 
-          {/* Desktop: Theme + FAQ + Kontakt rechts vom Menü */}
+          {/* Desktop: Theme + FAQ rechts vom Menü */}
           <div className="hidden lg:flex items-center gap-2 ml-2 shrink-0">
             <button
               type="button"
@@ -430,17 +450,6 @@ export default function Header() {
               </span>
             </button>
             <a
-              href="/#kontakt"
-              aria-label="Kontaktbereich anzeigen"
-              onClick={(e) => {
-                e.preventDefault();
-                handleContactButtonClick();
-              }}
-              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#22d3ee]/18 hover:border-[#22d3ee] hover:shadow-[0_0_16px_rgba(34,211,238,0.9)] text-white text-sm transition-colors duration-150"
-            >
-              <Icon name="mail" className="w-[18px] h-[18px]" />
-            </a>
-            <a
               href="/#faq"
               aria-label="FAQ"
               onClick={(e) => handleSmoothNavClick(e, '/#faq')}
@@ -450,7 +459,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Mobile: Theme + FAQ + Kontakt + Burger in einer Reihe */}
+          {/* Mobile: Theme + FAQ + Burger in einer Reihe */}
           <div className="flex items-center gap-2 ml-2 lg:hidden shrink-0">
             <button
               type="button"
@@ -475,17 +484,6 @@ export default function Header() {
                 </span>
               </span>
             </button>
-            <a
-              href="/#kontakt"
-              aria-label="Kontaktbereich anzeigen"
-              onClick={(e) => {
-                e.preventDefault();
-                handleContactButtonClick();
-              }}
-              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#22d3ee]/18 hover:border-[#22d3ee] hover:shadow-[0_0_16px_rgba(34,211,238,0.9)] text-white text-sm transition-colors duration-150"
-            >
-              <Icon name="mail" className="w-[18px] h-[18px]" />
-            </a>
             <a
               href="/#faq"
               aria-label="FAQ"
@@ -523,6 +521,73 @@ export default function Header() {
           </div>
         </div>
       </div>
+      {isSocialsOpen && socialsPos &&
+        createPortal(
+          <div
+            className="fixed z-[9999]"
+            style={{ top: socialsPos.top, left: socialsPos.left }}
+            onMouseEnter={() => setIsSocialsOpen(true)}
+            onMouseLeave={() => setIsSocialsOpen(false)}
+          >
+            <div className="rounded-2xl bg-black/70 backdrop-blur-2xl border border-white/15 shadow-[0_18px_40px_rgba(15,23,42,0.9)] px-4 py-3">
+              <div className="flex gap-2">
+                <a
+                  href="https://wa.me/4915511207431"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="WhatsApp"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#25D366]/20 hover:border-[#25D366] hover:shadow-[0_0_14px_rgba(37,211,102,0.9)] text-white text-sm transition-colors duration-150"
+                >
+                  <Icon name="whatsapp" className="w-[18px] h-[18px]" />
+                </a>
+                <a
+                  href="mailto:info@slicker.agency"
+                  aria-label="E-Mail"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#22d3ee]/18 hover:border-[#22d3ee] hover:shadow-[0_0_14px_rgba(34,211,238,0.9)] text-white text-sm transition-colors duration-150"
+                >
+                  <Icon name="mail" className="w-[18px] h-[18px]" />
+                </a>
+                <a
+                  href="https://www.tiktok.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="TikTok"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#ff0050]/18 hover:border-[#ff0050] hover:shadow-[0_0_14px_rgba(255,0,80,0.9)] text-white text-sm transition-colors duration-150"
+                >
+                  <Icon name="tiktok" className="w-[18px] h-[18px]" />
+                </a>
+                <a
+                  href="https://www.instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#E1306C]/18 hover:border-[#E1306C] hover:shadow-[0_0_14px_rgba(225,48,108,0.9)] text-white text-sm transition-colors duration-150"
+                >
+                  <Icon name="instagram" className="w-[18px] h-[18px]" />
+                </a>
+                <a
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#1877F2]/18 hover:border-[#1877F2] hover:shadow-[0_0_14px_rgba(24,119,242,0.9)] text-white text-sm transition-colors duration-150"
+                >
+                  <Icon name="facebook" className="w-[18px] h-[18px]" />
+                </a>
+                <a
+                  href="https://www.linkedin.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#0A66C2]/18 hover:border-[#0A66C2] hover:shadow-[0_0_14px_rgba(10,102,194,0.9)] text-white text-sm transition-colors duration-150"
+                >
+                  <Icon name="linkedin" className="w-[18px] h-[18px]" />
+                </a>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
 
       {/* Mobile Dropdown Navigation */}
       {isMenuOpen && (
@@ -582,10 +647,10 @@ export default function Header() {
                   href="https://wa.me/4915511207431"
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="WhatsApp Call"
+                  aria-label="WhatsApp"
                   className="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 bg-white/5 hover:bg-[#25D366]/20 hover:border-[#25D366] hover:shadow-[0_0_14px_rgba(37,211,102,0.9)] text-white text-sm transition-colors duration-150"
                 >
-                  <Icon name="phone" className="w-[18px] h-[18px]" />
+                  <Icon name="whatsapp" className="w-[18px] h-[18px]" />
                 </a>
                 <a
                   href="mailto:info@slicker.agency"
