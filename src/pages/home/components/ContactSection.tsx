@@ -3,6 +3,7 @@ import { useState, type FormEvent } from 'react';
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -10,6 +11,7 @@ export default function ContactSection() {
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrorMessage('');
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -26,6 +28,7 @@ export default function ContactSection() {
     // Basic validation, weil wir e.preventDefault() nutzen
     if (!payload.name || !payload.email || !payload.message || !payload.consent) {
       setSubmitStatus('error');
+      setErrorMessage('Bitte Pflichtfelder ausfüllen und Datenschutzerklärung bestätigen.');
       setIsSubmitting(false);
       return;
     }
@@ -39,13 +42,20 @@ export default function ContactSection() {
         body: JSON.stringify(payload),
       });
 
+      const contentType = res.headers.get('content-type') || '';
+      const data = contentType.includes('application/json') ? await res.json().catch(() => null) : null;
+
       if (!res.ok) {
-        throw new Error('Request failed');
+        const msg = (data && (data.error || data.message)) ? String(data.error || data.message) : `HTTP ${res.status}`;
+        throw new Error(msg);
       }
 
       setSubmitStatus('success');
+      setErrorMessage('');
       form.reset();
     } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unbekannter Fehler';
+      setErrorMessage(msg);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -249,8 +259,7 @@ export default function ContactSection() {
                 )}
                 {submitStatus === 'error' && (
                   <p className="text-sm text-right text-rose-300">
-                    Beim Senden ist ein Fehler aufgetreten. Bitte prüfen Sie Ihre Angaben und versuchen Sie es
-                    erneut.
+                    {errorMessage || 'Beim Senden ist ein Fehler aufgetreten. Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut.'}
                   </p>
                 )}
               </form>
