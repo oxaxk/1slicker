@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 const faqs = [
   {
@@ -56,11 +56,43 @@ const MobileFaqCard = memo(function MobileFaqCard({
   onToggle: () => void;
   Icon: ({ name, className }: { name: 'calendar' | 'layout' | 'chevDown'; className?: string }) => JSX.Element | null;
 }) {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [contentHeight, setContentHeight] = useState(0);
+  const measuredHeightRef = useRef<number>(0);
+
+  useLayoutEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
+    if (!isOpen) {
+      setContentHeight(0);
+      return;
+    }
+
+    // Use cached height if already measured
+    if (measuredHeightRef.current > 0) {
+      setContentHeight(measuredHeightRef.current);
+      return;
+    }
+
+    const measure = () => {
+      const h = el.scrollHeight;
+      measuredHeightRef.current = h;
+      setContentHeight(h);
+    };
+
+    // Measure after layout settles (mobile can be late due to font wrap)
+    requestAnimationFrame(measure);
+    const t = window.setTimeout(measure, 60);
+    return () => window.clearTimeout(t);
+  }, [isOpen, answer]);
+
   return (
     <button
       type="button"
       onClick={onToggle}
-      className="w-full text-left group rounded-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--card-glass)] dark:bg-black/60 backdrop-blur-lg md:backdrop-blur-2xl px-5 py-4 transition-all duration-200 transform-gpu md:hover:border-[#22d3ee] md:hover:shadow-[0_0_22px_rgba(34,211,238,0.9)]"
+      style={{ contain: 'layout paint' }}
+      className="w-full text-left group rounded-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--card-glass)] dark:bg-black/60 backdrop-blur-none md:backdrop-blur-2xl px-5 py-4 transition-all duration-200 transform-gpu md:hover:border-[#22d3ee] md:hover:shadow-[0_0_22px_rgba(34,211,238,0.9)]"
     >
       <div className="flex items-center justify-between gap-3">
         <p className="font-medium text-[color:var(--page-fg)] text-sm mt-1">{question}</p>
@@ -89,12 +121,13 @@ const MobileFaqCard = memo(function MobileFaqCard({
 
       <div
         className={
-          'mt-2 overflow-hidden will-change-[max-height,opacity] transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none ' +
-          (isOpen ? 'opacity-100 max-h-[520px]' : 'opacity-0 max-h-0')
+          'mt-2 overflow-hidden will-change-[height,opacity] transition-[height,opacity] duration-420 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none ' +
+          (isOpen ? 'opacity-100' : 'opacity-0')
         }
+        style={{ height: isOpen ? contentHeight : 0 }}
         aria-hidden={!isOpen}
       >
-        <div className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
+        <div ref={contentRef} className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
           <p>{answer}</p>
         </div>
       </div>
