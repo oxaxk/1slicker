@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/feature/Header';
 import Footer from '../../components/feature/Footer';
 import CookieBanner from '../../components/feature/CookieBanner';
 
 export default function CookieSettingsPage() {
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof document === 'undefined') return true;
+    const el = document.documentElement;
+    const dataTheme = el.getAttribute('data-theme');
+    if (dataTheme === 'light') return false;
+    if (dataTheme === 'dark') return true;
+    return el.classList.contains('dark');
+  });
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const el = document.documentElement;
+
+    const compute = () => {
+      const dataTheme = el.getAttribute('data-theme');
+      if (dataTheme === 'light') return false;
+      if (dataTheme === 'dark') return true;
+      return el.classList.contains('dark');
+    };
+
+    setIsDarkMode(compute());
+
+    const obs = new MutationObserver(() => setIsDarkMode(compute()));
+    obs.observe(el, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+    return () => obs.disconnect();
+  }, []);
+
   const handleOpenBanner = () => {
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new Event('open-cookie-banner'));
@@ -24,7 +51,7 @@ export default function CookieSettingsPage() {
           <header className="mb-8 md:mb-10">
             <div className="flex items-center gap-3 mb-5">
               <img
-                src="/images/cookie.png"
+                src={isDarkMode ? '/images/cookie.png' : '/images/cookie2.png'}
                 alt="Cookie Einstellungen"
                 className="w-12 h-12 rounded-2xl object-contain bg-[var(--card-glass)] border border-[rgba(15,23,42,0.14)] dark:border-white/12 p-2"
                 onError={(e) => {
@@ -32,27 +59,6 @@ export default function CookieSettingsPage() {
                 }}
                 draggable={false}
               />
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[var(--card-glass)] border border-[rgba(15,23,42,0.14)] dark:border-white/12">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="text-[color:var(--page-fg)]"
-                >
-                  <path
-                    d="M12 2.6c.55 0 1 .45 1 1 0 1.1.9 2 2 2 .55 0 1 .45 1 1 0 1.38 1.12 2.5 2.5 2.5.55 0 1 .45 1 1 0 6.02-4.88 10.9-10.9 10.9S1.7 18.12 1.7 12.1C1.7 6.08 6.58 1.2 12.6 1.2c.55 0 1 .45 1 1 0 .22-.02.43-.06.63-.09.45-.49.77-.94.77h-.6Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                  <circle cx="9.2" cy="12" r="1.2" fill="currentColor" opacity="0.55" />
-                  <circle cx="13.4" cy="14.4" r="1" fill="currentColor" opacity="0.55" />
-                  <circle cx="12.6" cy="9.1" r="0.9" fill="currentColor" opacity="0.55" />
-                  <circle cx="16.3" cy="11.3" r="0.8" fill="currentColor" opacity="0.55" />
-                </svg>
-              </div>
             </div>
             <h1
               className="text-[1.9rem] md:text-[2.3rem] lg:text-[2.5rem] font-light leading-snug tracking-[0.08em] uppercase text-[color:var(--page-fg)]"
