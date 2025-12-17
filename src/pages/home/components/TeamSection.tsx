@@ -1,53 +1,117 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
+
+const faqs = [
+  {
+    question: 'Wie läuft der Projektstart mit Slicker ab?',
+    answer:
+      'Wir starten mit einem kurzen Call, klären Ziele, Status quo und Budgetrahmen. Danach bekommst du eine klare Roadmap – welche Webauftritte, Automationen, Shops oder Setups wirklich sinnvoll sind.'
+  },
+  {
+    question: 'Für wen sind eure Leistungen gedacht?',
+    answer:
+      'Für lokale Unternehmen, digitale Projekte und Teams, die ihre Prozesse mit KI und Automationen nach vorne bringen wollen – ohne dafür eine eigene Tech-Abteilung aufzubauen.'
+  },
+  {
+    question: 'Mit welchen Technologien arbeitet ihr?',
+    answer:
+      'Moderne Web-Stacks wie React/Vite/Next.js, n8n für Automationen, KI-Tools, Analytics- und Tracking-Setups sowie E‑Commerce-Lösungen z. B. auf Shopify-Basis.'
+  },
+  {
+    question: 'Wie schnell könnt ihr loslegen?',
+    answer:
+      'In der Regel melden wir uns innerhalb von 24 Stunden zurück. Je nach Umfang können erste Ergebnisse nach wenigen Tagen stehen, komplexere Setups planen wir transparent mit dir durch.'
+  },
+  {
+    question: 'Gibt es eine Mindestlaufzeit oder feste Verträge?',
+    answer:
+      'Für viele Setups starten wir mit einem klar definierten Projektumfang. Für laufende Betreuung oder Automations-Monitoring arbeiten wir mit flexiblen Monats-Paketen ohne lange Laufzeiten.'
+  },
+  {
+    question: 'Könnt ihr auch bestehende Systeme weiterentwickeln?',
+    answer:
+      'Ja. Wir steigen häufig in bestehende Webauftritte, n8n-Flows oder Tracking-Setups ein, räumen auf und erweitern sie Schritt für Schritt – statt alles „from scratch“ neu zu bauen.'
+  },
+  {
+    question: 'Arbeitet ihr komplett remote oder auch vor Ort?',
+    answer:
+      'Die meisten Abstimmungen laufen remote über Calls und gemeinsame Boards. Für größere Projekte oder Workshops sind nach Absprache auch Vor-Ort-Termine möglich.'
+  },
+  {
+    question: 'Was kostet ein typisches Projekt mit euch?',
+    answer:
+      'Das hängt stark vom Umfang ab. Einfache Landingpages starten im niedrigen vierstelligen Bereich, komplexere KI-Setups oder E‑Commerce-Projekte werden transparent geplant und vorab mit dir durchgerechnet.'
+  }
+];
+
+const MobileFaqCard = memo(function MobileFaqCard({
+  question,
+  answer,
+  isOpen,
+  onToggle,
+  Icon
+}: {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  Icon: ({ name, className }: { name: 'calendar' | 'layout' | 'chevDown'; className?: string }) => JSX.Element | null;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="w-full text-left group rounded-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--card-glass)] dark:bg-black/60 backdrop-blur-lg md:backdrop-blur-2xl px-5 py-4 transition-all duration-200 transform-gpu md:hover:border-[#22d3ee] md:hover:shadow-[0_0_22px_rgba(34,211,238,0.9)]"
+    >
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-medium text-[color:var(--page-fg)] text-sm mt-1">{question}</p>
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggle();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggle();
+            }
+          }}
+          className="cursor-pointer flex items-center justify-center w-7 h-7 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/25 bg-[var(--card-glass)] dark:bg-white/5 text-[color:var(--page-fg)] text-xs mt-1 transition-all duration-200 md:group-hover:border-[#22d3ee] md:group-hover:shadow-[0_0_16px_rgba(34,211,238,0.9)]"
+        >
+          <Icon
+            name="chevDown"
+            className={`w-[18px] h-[18px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          />
+        </span>
+      </div>
+
+      <div
+        className={
+          'mt-2 overflow-hidden will-change-[max-height,opacity] transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none ' +
+          (isOpen ? 'opacity-100 max-h-[520px]' : 'opacity-0 max-h-0')
+        }
+        aria-hidden={!isOpen}
+      >
+        <div className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
+          <p>{answer}</p>
+        </div>
+      </div>
+    </button>
+  );
+});
 
 const TeamSection = () => {
-  const faqs = [
-    {
-      question: 'Wie läuft der Projektstart mit Slicker ab?',
-      answer:
-        'Wir starten mit einem kurzen Call, klären Ziele, Status quo und Budgetrahmen. Danach bekommst du eine klare Roadmap – welche Webauftritte, Automationen, Shops oder Setups wirklich sinnvoll sind.'
-    },
-    {
-      question: 'Für wen sind eure Leistungen gedacht?',
-      answer:
-        'Für lokale Unternehmen, digitale Projekte und Teams, die ihre Prozesse mit KI und Automationen nach vorne bringen wollen – ohne dafür eine eigene Tech-Abteilung aufzubauen.'
-    },
-    {
-      question: 'Mit welchen Technologien arbeitet ihr?',
-      answer:
-        'Moderne Web-Stacks wie React/Vite/Next.js, n8n für Automationen, KI-Tools, Analytics- und Tracking-Setups sowie E‑Commerce-Lösungen z. B. auf Shopify-Basis.'
-    },
-    {
-      question: 'Wie schnell könnt ihr loslegen?',
-      answer:
-        'In der Regel melden wir uns innerhalb von 24 Stunden zurück. Je nach Umfang können erste Ergebnisse nach wenigen Tagen stehen, komplexere Setups planen wir transparent mit dir durch.'
-    },
-    {
-      question: 'Gibt es eine Mindestlaufzeit oder feste Verträge?',
-      answer:
-        'Für viele Setups starten wir mit einem klar definierten Projektumfang. Für laufende Betreuung oder Automations-Monitoring arbeiten wir mit flexiblen Monats-Paketen ohne lange Laufzeiten.'
-    },
-    {
-      question: 'Könnt ihr auch bestehende Systeme weiterentwickeln?',
-      answer:
-        'Ja. Wir steigen häufig in bestehende Webauftritte, n8n-Flows oder Tracking-Setups ein, räumen auf und erweitern sie Schritt für Schritt – statt alles „from scratch“ neu zu bauen.'
-    },
-    {
-      question: 'Arbeitet ihr komplett remote oder auch vor Ort?',
-      answer:
-        'Die meisten Abstimmungen laufen remote über Calls und gemeinsame Boards. Für größere Projekte oder Workshops sind nach Absprache auch Vor-Ort-Termine möglich.'
-    },
-    {
-      question: 'Was kostet ein typisches Projekt mit euch?',
-      answer:
-        'Das hängt stark vom Umfang ab. Einfache Landingpages starten im niedrigen vierstelligen Bereich, komplexere KI-Setups oder E‑Commerce-Projekte werden transparent geplant und vorab mit dir durchgerechnet.'
-    }
-  ];
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [currentFaqPage, setCurrentFaqPage] = useState(0);
   const faqsPerPageMobile = 4;
   const totalFaqPages = Math.ceil(faqs.length / faqsPerPageMobile);
+
+  const toggleFaq = useCallback((index: number) => {
+    setOpenFaqIndex((prev) => (prev === index ? null : index));
+  }, []);
 
   const Icon = ({ name, className }: { name: 'calendar' | 'layout' | 'chevDown'; className?: string }) => {
     const common = {
@@ -200,52 +264,15 @@ const TeamSection = () => {
                         .map((faq, index) => {
                           const realIndex = pageIndex * faqsPerPageMobile + index;
                           const isOpen = openFaqIndex === realIndex;
-
                           return (
-                            <button
+                            <MobileFaqCard
                               key={faq.question}
-                              type="button"
-                              onClick={() => setOpenFaqIndex(isOpen ? null : realIndex)}
-                              className="w-full text-left group rounded-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--card-glass)] dark:bg-black/60 backdrop-blur-2xl px-5 py-4 hover:border-[#22d3ee] hover:shadow-[0_0_22px_rgba(34,211,238,0.9)] transition-all duration-200 transform-gpu"
-                            >
-                              <div className="flex items-center justify-between gap-3">
-                                <p className="font-medium text-[color:var(--page-fg)] text-sm mt-1">
-                                  {faq.question}
-                                </p>
-                                <span
-                                  role="button"
-                                  tabIndex={0}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setOpenFaqIndex(isOpen ? null : realIndex);
-                                  }}
-                                  onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      setOpenFaqIndex(isOpen ? null : realIndex);
-                                    }
-                                  }}
-                                  className="cursor-pointer flex items-center justify-center w-7 h-7 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/25 bg-[var(--card-glass)] dark:bg-white/5 text-[color:var(--page-fg)] text-xs mt-1 transition-all duration-200 group-hover:border-[#22d3ee] group-hover:shadow-[0_0_16px_rgba(34,211,238,0.9)]"
-                                >
-                                  <Icon
-                                    name="chevDown"
-                                    className={`w-[18px] h-[18px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                                  />
-                                </span>
-                              </div>
-                              <div
-                                className={
-                                  "mt-2 overflow-hidden will-change-[max-height,opacity] transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none " +
-                                  (isOpen ? "opacity-100 max-h-[260px]" : "opacity-0 max-h-0")
-                                }
-                                aria-hidden={!isOpen}
-                              >
-                                <div className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
-                                  <p>{faq.answer}</p>
-                                </div>
-                              </div>
-                            </button>
+                              question={faq.question}
+                              answer={faq.answer}
+                              isOpen={isOpen}
+                              onToggle={() => toggleFaq(realIndex)}
+                              Icon={Icon}
+                            />
                           );
                         })}
                     </div>
