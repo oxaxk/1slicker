@@ -206,7 +206,7 @@ const TeamSection = () => {
                               key={faq.question}
                               type="button"
                               onClick={() => setOpenFaqIndex(isOpen ? null : realIndex)}
-                              className="w-full text-left group rounded-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--card-glass)] dark:bg-black/60 backdrop-blur-2xl px-5 py-4 hover:border-[#22d3ee] hover:shadow-[0_0_22px_rgba(34,211,238,0.9)] transition-all duration-200 min-h-[160px] transform-gpu"
+                              className="w-full text-left group rounded-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--card-glass)] dark:bg-black/60 backdrop-blur-2xl px-5 py-4 hover:border-[#22d3ee] hover:shadow-[0_0_22px_rgba(34,211,238,0.9)] transition-all duration-200 transform-gpu"
                             >
                               <div className="flex items-center justify-between gap-3">
                                 <p className="font-medium text-[color:var(--page-fg)] text-sm mt-1">
@@ -236,16 +236,13 @@ const TeamSection = () => {
                               </div>
                               <div
                                 className={
-                                  "mt-2 grid overflow-hidden transform-gpu transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none " +
-                                  (isOpen ? "opacity-100" : "opacity-0")
+                                  "mt-2 overflow-hidden will-change-[max-height,opacity] transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none " +
+                                  (isOpen ? "opacity-100 max-h-[260px]" : "opacity-0 max-h-0")
                                 }
-                                style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
                                 aria-hidden={!isOpen}
                               >
-                                <div className="min-h-0 overflow-hidden transform-gpu">
-                                  <div className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
-                                    <p>{faq.answer}</p>
-                                  </div>
+                                <div className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
+                                  <p>{faq.answer}</p>
                                 </div>
                               </div>
                             </button>
