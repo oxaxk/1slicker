@@ -65,7 +65,6 @@ export default function CookieBanner() {
   // Consent-Status (accepted / rejected / unset)
   const [status, setStatus] = useState<ConsentStatus>(() => getInitialStatus());
   // Sichtbarkeit des Banners separat steuern
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(true);
 
@@ -100,15 +99,10 @@ export default function CookieBanner() {
   useEffect(() => {
     const onOpen = () => {
       setIsOpen(true);
-      setIsVisible(true);
     };
     window.addEventListener('open-cookie-banner', onOpen);
     return () => window.removeEventListener('open-cookie-banner', onOpen);
   }, []);
-
-  useEffect(() => {
-    setIsVisible(isOpen);
-  }, [isOpen]);
 
   const handleAccept = () => {
     try {
@@ -131,21 +125,16 @@ export default function CookieBanner() {
     // Hier sicherstellen: keine optionalen Cookies / Tracker laden.
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
   if (!isActive) return null;
   if (!isOpen) return null;
 
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-black/60 dark:bg-black/60"
-      onClick={handleClose}
+      onClick={(e) => e.stopPropagation()}
     >
       <div
         className="w-full sm:max-w-xl mx-4 mb-4 sm:mb-0 rounded-3xl backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--section-glass)] dark:bg-black/75 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-5 sm:p-6"
-        onClick={(e) => e.stopPropagation()}
       >
         <h2
           className="text-base sm:text-lg font-semibold mb-2 text-[color:var(--page-fg)]"
