@@ -1,4 +1,4 @@
-import { memo, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const faqs = [
   {
@@ -57,35 +57,66 @@ const MobileFaqCard = memo(function MobileFaqCard({
   Icon: ({ name, className }: { name: 'calendar' | 'layout' | 'chevDown'; className?: string }) => JSX.Element | null;
 }) {
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const [contentHeight, setContentHeight] = useState(0);
-  const measuredHeightRef = useRef<number>(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const prevOpenRef = useRef<boolean>(false);
+  const animRef = useRef<Animation | null>(null);
 
   useLayoutEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
+    const container = containerRef.current;
+    const content = contentRef.current;
+    if (!container || !content) return;
 
-    if (!isOpen) {
-      setContentHeight(0);
+    const wasOpen = prevOpenRef.current;
+    if (wasOpen === isOpen) return;
+    prevOpenRef.current = isOpen;
+
+    // cancel running animation
+    if (animRef.current) {
+      animRef.current.cancel();
+      animRef.current = null;
+    }
+
+    const startHeight = container.getBoundingClientRect().height;
+
+    // If opening, ensure content is measurable
+    if (isOpen) {
+      container.style.height = `${startHeight}px`;
+      container.style.opacity = '1';
+      // measure target height
+      const target = content.scrollHeight;
+
+      const a = container.animate(
+        [{ height: `${startHeight}px`, opacity: 0 }, { height: `${target}px`, opacity: 1 }],
+        { duration: 280, easing: 'cubic-bezier(0.22,0.61,0.36,1)' }
+      );
+      animRef.current = a;
+      a.onfinish = () => {
+        animRef.current = null;
+        container.style.height = 'auto';
+        container.style.opacity = '1';
+      };
       return;
     }
 
-    // Use cached height if already measured
-    if (measuredHeightRef.current > 0) {
-      setContentHeight(measuredHeightRef.current);
-      return;
-    }
-
-    const measure = () => {
-      const h = el.scrollHeight;
-      measuredHeightRef.current = h;
-      setContentHeight(h);
+    // closing: set fixed height first, then animate to 0
+    container.style.height = `${startHeight}px`;
+    const a = container.animate(
+      [{ height: `${startHeight}px`, opacity: 1 }, { height: '0px', opacity: 0 }],
+      { duration: 220, easing: 'cubic-bezier(0.22,0.61,0.36,1)' }
+    );
+    animRef.current = a;
+    a.onfinish = () => {
+      animRef.current = null;
+      container.style.height = '0px';
+      container.style.opacity = '0';
     };
+  }, [isOpen]);
 
-    // Measure after layout settles (mobile can be late due to font wrap)
-    requestAnimationFrame(measure);
-    const t = window.setTimeout(measure, 60);
-    return () => window.clearTimeout(t);
-  }, [isOpen, answer]);
+  useEffect(() => {
+    return () => {
+      if (animRef.current) animRef.current.cancel();
+    };
+  }, []);
 
   return (
     <button
@@ -120,11 +151,9 @@ const MobileFaqCard = memo(function MobileFaqCard({
       </div>
 
       <div
-        className={
-          'mt-2 overflow-hidden will-change-[height,opacity] transition-[height,opacity] duration-420 ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none ' +
-          (isOpen ? 'opacity-100' : 'opacity-0')
-        }
-        style={{ height: isOpen ? contentHeight : 0 }}
+        ref={containerRef}
+        className="mt-2 overflow-hidden will-change-[height,opacity] motion-reduce:transition-none"
+        style={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
         aria-hidden={!isOpen}
       >
         <div ref={contentRef} className="text-xs text-[color:var(--page-fg)] opacity-70 leading-relaxed pt-1">
