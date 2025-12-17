@@ -198,13 +198,21 @@ export default function Header() {
   };
 
   const handleContactButtonClick = () => {
-    if (typeof document !== 'undefined') {
-      const target = document.querySelector('#kontakt');
-      if (target instanceof HTMLElement) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    // If we are not on the homepage, navigate to /#kontakt
+    if (window.location.pathname !== '/') {
+      window.location.assign('/#kontakt');
+      return;
     }
+
+    const target = document.querySelector('#kontakt');
+    if (target instanceof HTMLElement) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     setIsMenuOpen(false);
+    setIsSocialsOpen(false);
   };
 
   const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -226,9 +234,14 @@ export default function Header() {
     event.preventDefault();
 
     const targetElement = document.getElementById(hash);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // If the section isn't in the current DOM (e.g., we are on /impressum), navigate to /#hash
+    if (!targetElement) {
+      window.location.assign(`/#${hash}`);
+      return;
     }
+
+    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     setIsMenuOpen(false);
     setIsSocialsOpen(false);
