@@ -105,6 +105,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       auth: { user, pass }
     });
 
+    // Verify SMTP config early for clearer error reporting
+    await transporter.verify();
+
     await transporter.sendMail({
       from: `"Kontaktformular" <${user}>`,
       to: recipient,
@@ -122,7 +125,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     return res.status(200).json({ ok: true });
-  } catch {
+  } catch (err: unknown) {
+    const e = err as { message?: string; code?: string; responseCode?: number };
+    // Do not log form content. Only log SMTP failure metadata.
+    console.error('MAIL_FAILED', {
+      message: e?.message,
+      code: e?.code,
+      responseCode: e?.responseCode,
+      host,
+      port,
+      secure: process.env.SMTP_SECURE === 'true'
+    });
     return res.status(500).json({ ok: false, error: 'MAIL_FAILED' });
   }
 }
