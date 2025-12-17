@@ -349,7 +349,7 @@ export default function Header() {
               draggable={false}
             />
             <div
-              className="text-3xl md:text-4xl font-light uppercase whitespace-nowrap"
+              className="hidden md:block text-3xl md:text-4xl font-light uppercase whitespace-nowrap"
               role="heading"
               aria-level={2}
               style={{
