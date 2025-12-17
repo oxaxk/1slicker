@@ -336,8 +336,8 @@ export default function ServicesSection() {
               style={{ WebkitOverflowScrolling: 'touch' }}
             >
               {services.map((svc) => (
-                <div key={svc.title} className="shrink-0 w-[82%] md:w-[44%] lg:w-[34%] snap-center">
-                  <div className="border border-[rgba(15,23,42,0.14)] dark:border-white/15 rounded-[1.8rem] bg-[var(--card-glass)] dark:bg-black/40 backdrop-blur-2xl shadow-[0_22px_70px_rgba(15,23,42,0.12)] transition-all duration-300 h-[270px] md:h-[270px] lg:h-[270px] flex flex-col px-6 pt-5 pb-6 hover:border-cyan-400/70 hover:shadow-[0_28px_90px_rgba(34,211,238,0.55)]">
+                <div key={svc.title} className="shrink-0 w-[92%] md:w-[44%] lg:w-[34%] snap-center">
+                  <div className="border border-[rgba(15,23,42,0.14)] dark:border-white/15 rounded-[1.8rem] bg-[var(--card-glass)] dark:bg-black/40 backdrop-blur-2xl shadow-[0_22px_70px_rgba(15,23,42,0.12)] transition-all duration-300 min-h-[310px] md:min-h-[270px] lg:min-h-[270px] flex flex-col px-6 pt-5 pb-6 hover:border-cyan-400/70 hover:shadow-[0_28px_90px_rgba(34,211,238,0.55)]">
                     <div className="flex items-center gap-4 mb-3">
                       <div className="w-11 h-11 flex items-center justify-center rounded-full bg-[var(--card-glass)] dark:bg-white/5 border border-[rgba(15,23,42,0.14)] dark:border-white/20">
                         <Icon name={svc.iconKey} className="w-6 h-6 text-[color:var(--page-fg)]" />
@@ -356,13 +356,13 @@ export default function ServicesSection() {
                     <div className="mt-4 flex flex-nowrap items-center gap-2">
                       <a
                         href={`/leistungen/${svc.slug}`}
-                        className="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/20 bg-[var(--card-glass)] dark:bg-white/5 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-[color:var(--page-fg)] hover:border-cyan-400 hover:bg-white/10 transition-all shrink"
+                        className="inline-flex flex-1 min-w-0 items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/20 bg-[var(--card-glass)] dark:bg-white/5 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-[color:var(--page-fg)] hover:border-cyan-400 hover:bg-white/10 transition-all"
                       >
                         Mehr erfahren
                       </a>
                       <a
                         href="#kontakt"
-                        className="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full bg-cyan-500/90 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-black border border-transparent hover:bg-cyan-400 transition-all shrink"
+                        className="inline-flex flex-1 min-w-0 items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full bg-cyan-500/90 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-black border border-transparent hover:bg-cyan-400 transition-all"
                       >
                         Beratung anfragen
                       </a>
