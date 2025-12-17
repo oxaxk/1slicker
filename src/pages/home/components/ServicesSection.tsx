@@ -356,13 +356,13 @@ export default function ServicesSection() {
                     <div className="mt-4 flex flex-nowrap items-center gap-2">
                       <a
                         href={`/leistungen/${svc.slug}`}
-                        className="inline-flex flex-1 min-w-0 items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/20 bg-[var(--card-glass)] dark:bg-white/5 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-[color:var(--page-fg)] hover:border-cyan-400 hover:bg-white/10 transition-all"
+                        className="inline-flex flex-[0.9] min-w-0 items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full border border-[rgba(15,23,42,0.14)] dark:border-white/20 bg-[var(--card-glass)] dark:bg-white/5 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-[color:var(--page-fg)] hover:border-cyan-400 hover:bg-white/10 transition-all"
                       >
                         Mehr erfahren
                       </a>
                       <a
                         href="#kontakt"
-                        className="inline-flex flex-1 min-w-0 items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full bg-cyan-500/90 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-black border border-transparent hover:bg-cyan-400 transition-all"
+                        className="inline-flex flex-[1.1] min-w-0 items-center justify-center whitespace-nowrap px-2.5 py-1 md:px-3 md:py-1 rounded-full bg-cyan-500/90 text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.14em] text-black border border-transparent hover:bg-cyan-400 transition-all"
                       >
                         Beratung anfragen
                       </a>
