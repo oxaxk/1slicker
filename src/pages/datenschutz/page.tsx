@@ -685,8 +685,8 @@ export default function Datenschutz() {
           </div>
         </div>
       </main>
-      <CookieBanner />
       <Footer />
+      <CookieBanner />
     </div>
   );
 }
