@@ -1,6 +1,5 @@
 import Header from '../../components/feature/Header';
 import Footer from '../../components/feature/Footer';
-import CookieBanner from '../../components/feature/CookieBanner';
 
 export default function Datenschutz() {
   return (
@@ -686,7 +685,6 @@ export default function Datenschutz() {
         </div>
       </main>
       <Footer />
-      <CookieBanner />
     </div>
   );
 }
