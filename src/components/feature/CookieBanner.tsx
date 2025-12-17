@@ -10,8 +10,6 @@ const STORAGE_KEY = 'cookie-consent-v1';
 const GOOGLE_ADS_ID = 'AW-XXXXXXXXX';
 const GOOGLE_ANALYTICS_ID = 'G-XXXXXXXXXX';
 
-let __cookieBannerActiveInstance = false;
-
 function hasRealId(id: string | undefined): boolean {
   if (!id) return false;
   return !id.includes('XXXX');
@@ -66,22 +64,8 @@ export default function CookieBanner() {
   const [status, setStatus] = useState<ConsentStatus>(() => getInitialStatus());
   // Sichtbarkeit des Banners separat steuern
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isActive, setIsActive] = useState<boolean>(true);
 
   const inRouter = useInRouterContext();
-
-  useEffect(() => {
-    if (__cookieBannerActiveInstance) {
-      setIsActive(false);
-      return;
-    }
-
-    __cookieBannerActiveInstance = true;
-
-    return () => {
-      __cookieBannerActiveInstance = false;
-    };
-  }, []);
 
   useEffect(() => {
     const initial = getInitialStatus();
@@ -128,8 +112,6 @@ export default function CookieBanner() {
   const openCookieSettings = () => {
     setIsOpen(true);
   };
-
-  if (!isActive) return null;
 
   return (
     <>
