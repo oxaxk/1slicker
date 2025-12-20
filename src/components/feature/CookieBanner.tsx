@@ -48,6 +48,31 @@ function loadTrackingScripts() {
   document.head.appendChild(inline);
 }
 
+function loadDesignAssets() {
+  if (typeof document === 'undefined') return;
+
+  const head = document.head;
+  const links = [
+    {
+      id: 'fa-css',
+      href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+    },
+    {
+      id: 'ri-css',
+      href: 'https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css',
+    },
+  ];
+
+  links.forEach(({ id, href }) => {
+    if (document.getElementById(id)) return;
+    const link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    link.href = href;
+    head.appendChild(link);
+  });
+}
+
 function getInitialStatus(): ConsentStatus {
   if (typeof window === 'undefined') return 'unset';
   try {
@@ -96,6 +121,7 @@ export default function CookieBanner() {
   useEffect(() => {
     if (status === 'accepted') {
       loadTrackingScripts();
+      loadDesignAssets();
     }
   }, [status]);
 
