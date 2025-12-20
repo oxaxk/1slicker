@@ -1,96 +1,107 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useInRouterContext } from 'react-router-dom';
 
-type ConsentStatus = 'accepted' | 'rejected' | 'unset';
+// Zustände für einzelne Kategorien – bei Bedarf erweiterbar
+type ConsentState = {
+  necessary: boolean;
+  analytics: boolean;
+  marketing: boolean;
+  icons: boolean;
+};
 
-const STORAGE_KEY = 'cookie-consent-v1';
+const CONSENT_KEY = 'slicker_cookie_consent_v1';
 
-// Platzhalter-IDs für späteres Tracking: Google Ads & Google Analytics
-// WICHTIG: Wenn du echte IDs einträgst, entferne "XXXX" aus den Strings.
-const GOOGLE_ADS_ID = 'AW-XXXXXXXXX';
-const GOOGLE_ANALYTICS_ID = 'G-XXXXXXXXXX';
+const DEFAULT_CONSENT: ConsentState = {
+  necessary: true,
+  analytics: false,
+  marketing: false,
+  icons: false,
+};
 
-function hasRealId(id: string | undefined): boolean {
-  if (!id) return false;
-  return !id.includes('XXXX');
-}
-
-function loadTrackingScripts() {
-  if (typeof window === 'undefined') return;
-
-  const hasAds = hasRealId(GOOGLE_ADS_ID);
-  const hasAnalytics = hasRealId(GOOGLE_ANALYTICS_ID);
-
-  // Wenn noch keine echten IDs gesetzt sind, nichts laden.
-  if (!hasAds && !hasAnalytics) return;
-
-  if ((window as any).slickerTrackingLoaded) {
-    return;
+function loadConsent(): ConsentState | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(CONSENT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+    return {
+      necessary: true,
+      analytics: !!parsed.analytics,
+      marketing: !!parsed.marketing,
+      icons: !!parsed.icons,
+    };
+  } catch {
+    return null;
   }
-
-  (window as any).slickerTrackingLoaded = true;
-
-  const baseId = hasAds ? GOOGLE_ADS_ID : GOOGLE_ANALYTICS_ID;
-
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${baseId}`;
-  document.head.appendChild(script);
-
-  const inline = document.createElement('script');
-  inline.innerHTML = `
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    ${hasAds ? `gtag('config', '${GOOGLE_ADS_ID}');` : ''}
-    ${hasAnalytics ? `gtag('config', '${GOOGLE_ANALYTICS_ID}');` : ''}
-  `;
-  document.head.appendChild(inline);
 }
 
-function loadDesignAssets() {
+function saveConsent(consent: ConsentState) {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(
+    CONSENT_KEY,
+    JSON.stringify({
+      analytics: consent.analytics,
+      marketing: consent.marketing,
+      icons: consent.icons,
+    })
+  );
+}
+
+// Externe Icon-Fonts (Font Awesome / Remix Icon) kontrolliert nach Consent laden/entfernen
+function toggleIconFonts(enabled: boolean) {
   if (typeof document === 'undefined') return;
 
   const head = document.head;
-  const links = [
-    {
-      id: 'fa-css',
-      href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-    },
-    {
-      id: 'ri-css',
-      href: 'https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css',
-    },
-  ];
 
-  links.forEach(({ id, href }) => {
-    if (document.getElementById(id)) return;
-    const link = document.createElement('link');
-    link.id = id;
-    link.rel = 'stylesheet';
-    link.href = href;
-    head.appendChild(link);
-  });
-}
+  const faId = 'cookie-fontawesome-css';
+  const remixId = 'cookie-remixicon-css';
 
-function getInitialStatus(): ConsentStatus {
-  if (typeof window === 'undefined') return 'unset';
-  try {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === 'accepted' || stored === 'rejected') return stored;
-    return 'unset';
-  } catch {
-    return 'unset';
+  const existingFa = document.getElementById(faId);
+  const existingRemix = document.getElementById(remixId);
+
+  if (enabled) {
+    if (!existingFa) {
+      const linkFa = document.createElement('link');
+      linkFa.id = faId;
+      linkFa.rel = 'stylesheet';
+      linkFa.href =
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+      linkFa.referrerPolicy = 'no-referrer';
+      head.appendChild(linkFa);
+    }
+    if (!existingRemix) {
+      const linkRemix = document.createElement('link');
+      linkRemix.id = remixId;
+      linkRemix.rel = 'stylesheet';
+      linkRemix.href =
+        'https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css';
+      linkRemix.referrerPolicy = 'no-referrer';
+      head.appendChild(linkRemix);
+    }
+  } else {
+    if (existingFa?.parentNode) existingFa.parentNode.removeChild(existingFa);
+    if (existingRemix?.parentNode) existingRemix.parentNode.removeChild(existingRemix);
   }
 }
 
-export default function CookieBanner() {
-  // Consent-Status (accepted / rejected / unset)
-  const [status, setStatus] = useState<ConsentStatus>(() => getInitialStatus());
-  // Sichtbarkeit des Banners separat steuern
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+// Consent global anwenden – hier können später auch gtag-Configs etc. ergänzt werden
+function applyConsent(consent: ConsentState) {
+  if (typeof document === 'undefined') return;
 
-  // Guard: prevent multiple CookieBanner instances (double-render makes close look like it needs 2 clicks)
+  const root = document.documentElement;
+  root.dataset.analyticsConsent = consent.analytics ? 'granted' : 'denied';
+  root.dataset.marketingConsent = consent.marketing ? 'granted' : 'denied';
+  root.dataset.iconsConsent = consent.icons ? 'granted' : 'denied';
+
+  toggleIconFonts(consent.icons);
+}
+
+export default function CookieBanner() {
+  const [consent, setConsent] = useState<ConsentState>(DEFAULT_CONSENT);
+  const [isOpen, setIsOpen] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+
+  // Guard gegen doppelte Instanzen (sonst "2x klicken"-Effekt)
   const [isPrimaryInstance] = useState(() => {
     if (typeof window === 'undefined') return true;
     const w = window as any;
@@ -99,17 +110,26 @@ export default function CookieBanner() {
     return true;
   });
 
-  const inRouter = useInRouterContext();
-
+  // Initial Consent laden
   useEffect(() => {
-    const initial = getInitialStatus();
-    setStatus(initial);
-    setIsOpen(initial === 'unset');
+    const loaded = loadConsent();
+    if (loaded) {
+      setConsent(loaded);
+      applyConsent(loaded);
+      setIsOpen(false);
+    } else {
+      setConsent(DEFAULT_CONSENT);
+      applyConsent(DEFAULT_CONSENT);
+      setIsOpen(true);
+    }
+    setInitialized(true);
   }, []);
 
+  // Guard-Cleanup
   useEffect(() => {
     if (!isPrimaryInstance) return;
     return () => {
+      if (typeof window === 'undefined') return;
       const w = window as any;
       if (w.__slickerCookieBannerMounted) {
         w.__slickerCookieBannerMounted = false;
@@ -117,55 +137,76 @@ export default function CookieBanner() {
     };
   }, [isPrimaryInstance]);
 
-  // Tracking-Skripte automatisch laden, wenn Consent akzeptiert wurde
+  // Event von Cookie-Seite: Banner öffnen
   useEffect(() => {
-    if (status === 'accepted') {
-      loadTrackingScripts();
-      loadDesignAssets();
-    }
-  }, [status]);
-
-  useEffect(() => {
-    const onOpen = () => {
-      setIsOpen(true);
+    const handler = () => setIsOpen(true);
+    if (typeof window === 'undefined') return;
+    window.addEventListener('slicker-open-cookie-banner', handler);
+    return () => {
+      window.removeEventListener('slicker-open-cookie-banner', handler);
     };
-    window.addEventListener('open-cookie-banner', onOpen);
-    return () => window.removeEventListener('open-cookie-banner', onOpen);
   }, []);
 
-  const handleAccept = () => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, 'accepted');
-    } catch {
-      // ignore storage errors
-    }
-    setStatus('accepted');
+  if (!initialized || !isPrimaryInstance) return null;
+
+  const handleAcceptAll = () => {
+    const all: ConsentState = {
+      necessary: true,
+      analytics: true,
+      marketing: true,
+      icons: true,
+    };
+    setConsent(all);
+    saveConsent(all);
+    applyConsent(all);
+    setIsOpen(false);
   };
 
-  const handleReject = () => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, 'rejected');
-    } catch {
-      // ignore storage errors
-    }
-    setStatus('rejected');
-    // Hier sicherstellen: keine optionalen Cookies / Tracker laden.
+  const handleOnlyNecessary = () => {
+    const onlyNecessary: ConsentState = {
+      necessary: true,
+      analytics: false,
+      marketing: false,
+      icons: false,
+    };
+    setConsent(onlyNecessary);
+    saveConsent(onlyNecessary);
+    applyConsent(onlyNecessary);
+    setIsOpen(false);
   };
 
-  const openCookieSettings = () => {
+  const handleToggle = (key: keyof Omit<ConsentState, 'necessary'>) => {
+    const updated: ConsentState = { ...consent, [key]: !consent[key] };
+    setConsent(updated);
+  };
+
+  const handleSaveSelection = () => {
+    saveConsent(consent);
+    applyConsent(consent);
+    setIsOpen(false);
+  };
+
+  const handleReset = () => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(CONSENT_KEY);
+    }
+    setConsent(DEFAULT_CONSENT);
+    applyConsent(DEFAULT_CONSENT);
     setIsOpen(true);
   };
 
-  if (!isPrimaryInstance) return null;
+  const hasStoredConsent =
+    typeof window !== 'undefined' && !!window.localStorage.getItem(CONSENT_KEY);
 
   return (
     <>
+      {/* Widget unten rechts – überall sichtbar */}
       <button
         type="button"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          openCookieSettings();
+          setIsOpen(true);
         }}
         aria-label="Cookie-Einstellungen öffnen"
         className="fixed right-5 bottom-[calc(env(safe-area-inset-bottom)+20px)] sm:bottom-5 z-[9999] w-12 h-12 rounded-full border border-white/20 bg-black/55 backdrop-blur-xl shadow-[0_14px_40px_rgba(15,23,42,0.65)] hover:border-[#22d3ee]/60 hover:shadow-[0_0_18px_rgba(34,211,238,0.55)] transition"
@@ -179,110 +220,115 @@ export default function CookieBanner() {
         />
       </button>
 
+      {/* Banner-Overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-black/60 dark:bg-black/60"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className="fixed inset-0 z-[9998] flex items-end sm:items-center justify-center bg-black/60" onClick={() => setIsOpen(false)}>
           <div
-            onPointerDown={(e) => {
-              e.stopPropagation();
-            }}
+            onClick={(e) => e.stopPropagation()}
             className="w-full sm:max-w-xl mx-4 mb-4 sm:mb-0 rounded-3xl backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--section-glass)] dark:bg-black/75 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-5 sm:p-6"
           >
             <h2
-              className="text-base sm:text-lg font-semibold mb-2 text-[color:var(--page-fg)]"
+              className="text-base sm:text-lg font-semibold mb-4 text-[color:var(--page-fg)]"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               Cookies &amp; Datenschutz
             </h2>
+
             <p
-              className="text-xs sm:text-sm mb-4 text-[color:var(--page-fg)] opacity-75"
+              className="text-sm mb-6 text-[color:var(--page-fg)] opacity-80"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. 
-              Optionale Cookies für Statistik oder Marketing setzen wir nur, wenn du zustimmst. 
-              Details findest du in unserer&nbsp;
-              {inRouter ? (
-                <Link
-                  to="/datenschutz"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsOpen(false);
-                  }}
-                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-                >
-                  Datenschutzerklärung
-                </Link>
-              ) : (
-                <a
-                  href="/datenschutz"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsOpen(false);
-                  }}
-                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-                >
-                  Datenschutzerklärung
-                </a>
-              )}
-              &nbsp;und in den&nbsp;
-              {inRouter ? (
-                <Link
-                  to="/cookie"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsOpen(false);
-                  }}
-                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-                >
-                  Cookie-Einstellungen
-                </Link>
-              ) : (
-                <a
-                  href="/cookie"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsOpen(false);
-                  }}
-                  className="underline hover:no-underline text-[color:var(--page-fg)] hover:opacity-100"
-                >
-                  Cookie-Einstellungen
-                </a>
-              )}
-              .
+              Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. Optionale Cookies für Statistik, Marketing und externe Icon-Fonts setzen wir nur, wenn du zustimmst.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
-              <button
-                type="button"
-                onPointerDown={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  // close immediately on touch, then persist
-                  setIsOpen(false);
-                  handleReject();
-                }}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-[rgba(15,23,42,0.14)] dark:border-white/30 text-[color:var(--page-fg)] bg-[var(--card-glass)] dark:bg-white/5 hover:bg-[rgba(8,145,178,0.22)] dark:hover:bg-white/10 transition-colors"
-                style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
-              >
-                Nur notwendige Cookies
-              </button>
-              <button
-                type="button"
-                onPointerDown={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  // close immediately on touch, then persist
-                  setIsOpen(false);
-                  handleAccept();
-                }}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-[#22d3ee] text-[#06121f] shadow-[0_18px_40px_rgba(34,211,238,0.45)] hover:bg-[#38e0ff] transition-colors"
-                style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
-              >
-                Alle akzeptieren
-              </button>
-            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSaveSelection();
+              }}
+            >
+              <div className="flex flex-col gap-4 mb-6">
+                <label className="flex items-center gap-3 cursor-default select-none text-[color:var(--page-fg)]">
+                  <input
+                    type="checkbox"
+                    checked={consent.necessary}
+                    disabled
+                    readOnly
+                    aria-disabled="true"
+                  />
+                  <span>Technisch notwendige Cookies (immer aktiv)</span>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer select-none text-[color:var(--page-fg)]">
+                  <input
+                    type="checkbox"
+                    checked={consent.analytics}
+                    onChange={() => handleToggle('analytics')}
+                  />
+                  <span>Statistik (Google Analytics, o.ä.)</span>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer select-none text-[color:var(--page-fg)]">
+                  <input
+                    type="checkbox"
+                    checked={consent.marketing}
+                    onChange={() => handleToggle('marketing')}
+                  />
+                  <span>Marketing (Google Ads, Facebook Pixel, o.ä.)</span>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer select-none text-[color:var(--page-fg)]">
+                  <input
+                    type="checkbox"
+                    checked={consent.icons}
+                    onChange={() => handleToggle('icons')}
+                  />
+                  <span>Externe Icon-Fonts (Font Awesome, Remix Icon)</span>
+                </label>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
+                <button
+                  type="button"
+                  onClick={handleOnlyNecessary}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-[rgba(15,23,42,0.14)] dark:border-white/30 text-[color:var(--page-fg)] bg-[var(--card-glass)] dark:bg-white/5 hover:bg-[rgba(8,145,178,0.22)] dark:hover:bg-white/10 transition-colors"
+                  style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
+                >
+                  Nur notwendige Cookies
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAcceptAll}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-[#22d3ee] text-[#06121f] shadow-[0_18px_40px_rgba(34,211,238,0.45)] hover:bg-[#38e0ff] transition-colors"
+                  style={{ fontFamily: 'Inter, sans-serif', touchAction: 'manipulation' }}
+                >
+                  Alle akzeptieren
+                </button>
+              </div>
+
+              <div className="mt-4 text-center">
+                <button
+                  type="submit"
+                  className="text-sm underline text-[color:var(--page-fg)] hover:text-[#22d3ee]"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  Auswahl speichern
+                </button>
+              </div>
+
+              {hasStoredConsent && (
+                <div className="mt-6 text-center">
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="text-sm underline text-[color:var(--page-fg)] hover:text-[#22d3ee]"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    Auswahl zurücksetzen
+                  </button>
+                </div>
+              )}
+            </form>
           </div>
         </div>
       )}
