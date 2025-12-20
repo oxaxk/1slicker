@@ -376,13 +376,12 @@ export default function Footer() {
                 >
                   Datenschutz
                 </Link>
-                <button
-                  type="button"
-                  onClick={handleOpenCookieBanner}
+                <Link
+                  to="/cookie"
                   className="text-[color:var(--page-fg)] opacity-60 hover:text-[#22d3ee] transition-colors"
                 >
                   Cookie-Einstellungen
-                </button>
+                </Link>
               </div>
             </div>
           </div>
