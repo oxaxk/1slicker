@@ -217,3 +217,16 @@ body {
     background-color 300ms ease-out,
     color 300ms ease-out;
 }
+
+/* Icon-Consent: externe Icon-Fonts ausblenden, wenn nicht erlaubt */
+html[data-icons-consent='denied'] .icon-consent-only,
+html[data-icons-consent='denied'] .fa,
+html[data-icons-consent='denied'] .fas,
+html[data-icons-consent='denied'] .far,
+html[data-icons-consent='denied'] .fab,
+html[data-icons-consent='denied'] .fa-solid,
+html[data-icons-consent='denied'] .fa-regular,
+html[data-icons-consent='denied'] .fa-brands,
+html[data-icons-consent='denied'] .ri {
+  display: none !important;
+}
