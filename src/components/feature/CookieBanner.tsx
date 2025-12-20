@@ -217,7 +217,7 @@ export default function CookieBanner() {
 
       {/* Banner-Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-[9998] flex items-end sm:items-center justify-center bg-black/60" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-[9998] flex items-end sm:items-center justify-center bg-black/60">
           <div
             onClick={(e) => e.stopPropagation()}
             className="w-full sm:max-w-xl mx-4 mb-4 sm:mb-0 rounded-3xl backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/12 bg-[var(--section-glass)] dark:bg-black/75 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-5 sm:p-6"
