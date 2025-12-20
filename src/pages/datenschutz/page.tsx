@@ -377,6 +377,36 @@ export default function Datenschutz() {
               seiner Website – hierzu müssen die Server-Log-Files erfasst werden.
             </p>
 
+            <h3 className="text-xl font-semibold mb-3 mt-6">
+              Cookies & Consent-Management
+            </h3>
+            <p className="mb-4">
+              Diese Website verwendet ein Cookie- und Consent-Management-Tool
+              (Cookie-Banner), mit dem Sie beim ersten Aufruf der Seite und
+              jederzeit über die „Cookie-Einstellungen“ im Footer festlegen
+              können, welche Kategorien von Cookies bzw. Diensten eingesetzt
+              werden dürfen. Wir unterscheiden im Wesentlichen zwischen:
+            </p>
+            <ul className="mb-4 list-disc pl-6">
+              <li className="mb-2">
+                <strong>Technisch notwendige Cookies & Funktionen:</strong>{' '}
+                z. B. ein Cookie, das Ihre Auswahl im Banner speichert, sowie
+                technisch erforderliche Funktionen für Navigation, Icons und
+                Benutzeroberfläche. Ohne diese ist ein stabiler Betrieb der
+                Website nicht möglich.
+              </li>
+              <li>
+                <strong>Analyse- und Marketing-Cookies:</strong> z. B. Google
+                Analytics oder Google Ads Conversion-Tracking, die nur nach
+                ausdrücklicher Einwilligung gesetzt werden.
+              </li>
+            </ul>
+            <p className="mb-4">
+              Details zu den konkret eingesetzten Cookies, Speicherdauern und
+              Widerrufsmöglichkeiten finden Sie in den Cookie-Einstellungen und
+              auf der separaten Cookie-Seite dieser Website.
+            </p>
+
             <h3 className="text-xl font-semibold mb-3 mt-6">Kontaktformular</h3>
             <p className="mb-4">
               Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden
@@ -454,7 +484,7 @@ export default function Datenschutz() {
               eigener Aussage personenbezogene Daten seiner Nutzer mit seiner in
               den USA ansässigen Konzernmutter Meta teilt. Weitere Details zur
               Datenverarbeitung finden Sie in der Datenschutzrichtlinie von
-              WhatsApp unter:{' '}
+              WhatsApp unter{' '}
               <a
                 href="https://www.whatsapp.com/legal/#privacy-policy"
                 target="_blank"
@@ -637,38 +667,40 @@ export default function Datenschutz() {
             </p>
 
             <h3 className="text-xl font-semibold mb-3 mt-6">
-              Icon-Fonts (z. B. Font Awesome, Remix Icon)
+              Icon-Fonts und UI-Icons
             </h3>
             <p className="mb-4">
-              Zur einheitlichen Darstellung von Symbolen und Icons setzen wir
-              Icon-Fonts ein, die über externe Content-Delivery-Netzwerke (z. B.
-              jsDelivr, CDNJS oder vergleichbare Anbieter) bereitgestellt werden.
-              Die Einbindung dieser Icon-Fonts erfolgt ausschließlich nach Ihrer
-              Einwilligung über das Cookie-Banner bzw. die
-              Cookie-Einstellungen.
+              Für Navigationselemente, Buttons und grafische Hinweise setzen wir
+              Icon-Fonts bzw. Icon-Bibliotheken (z. B. Font Awesome, Remix Icon
+              oder vergleichbare Lösungen) ein. Diese Icons sind für die
+              verständliche Darstellung der Benutzeroberfläche erforderlich
+              (z. B. Menü-, Kontakt- oder Social-Media-Symbole).
             </p>
             <p className="mb-4">
-              Wenn Sie der Nutzung zustimmen, werden beim Aufruf der entsprechenden
-              Seiten die benötigten Icon-Fonts von den Servern der jeweiligen
-              Anbieter geladen. Hierdurch erfahren die Anbieter u. a., dass über
-              Ihre IP-Adresse unsere Website aufgerufen wurde. Zudem können
-              weitere technische Informationen (z. B. Browser, Betriebssystem)
-              übermittelt werden.
+              Je nach Konfiguration werden die entsprechenden Icon-Dateien lokal
+              oder über Content-Delivery-Netzwerke (CDNs) geladen. Dabei ist
+              technisch bedingt die Verarbeitung Ihrer IP-Adresse und weiterer
+              Verbindungsdaten erforderlich, damit die Inhalte an Ihren Browser
+              ausgeliefert werden können. Eine weitergehende Auswertung dieser
+              Daten durch uns findet nicht statt; insbesondere setzen wir in
+              diesem Zusammenhang keine zusätzlichen Tracking-Cookies zu
+              Werbe- oder Analysezwecken.
             </p>
             <p className="mb-4">
-              Die Nutzung der Icon-Fonts erfolgt zur einheitlichen und
-              ansprechenden Darstellung unseres Online-Angebots und stellt ein
-              berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar.
-              Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die
-              Verarbeitung zusätzlich auf Grundlage von Art. 6 Abs. 1 lit. a
-              DSGVO und § 25 Abs. 1 TDDDG; die Einwilligung ist jederzeit
-              widerrufbar.
+              Die Nutzung der Icons erfolgt auf Grundlage von Art. 6 Abs. 1
+              lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer
+              einheitlichen und funktionalen Darstellung der Website, damit
+              Navigation und zentrale Funktionen (z. B. Kontakt, Social-Links,
+              Burger-Menü) überhaupt sinnvoll nutzbar sind. Die Icons werden
+              daher als technisch erforderlicher Bestandteil der Website
+              eingesetzt und können – je nach Konfiguration – auch dann geladen
+              werden, wenn Sie im Cookie-Banner nur „technisch notwendige“
+              Funktionen zulassen.
             </p>
             <p className="mb-4">
-              Detaillierte Informationen zu den konkret eingesetzten
-              Drittanbietern und Cookies (Speicherdauer, Kategorien etc.) finden
-              Sie im Cookie-Banner bzw. in den Cookie-Einstellungen dieser
-              Website.
+              Details zu den konkret eingesetzten Diensten und etwaigen
+              Drittanbietern entnehmen Sie bitte den Cookie-Einstellungen
+              sowie der Cookie-Seite dieser Website.
             </p>
 
             <h2 className="text-2xl font-semibold mb-4 mt-8">
