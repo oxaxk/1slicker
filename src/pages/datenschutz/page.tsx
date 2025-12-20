@@ -1,5 +1,6 @@
 import Header from '../../components/feature/Header';
 import Footer from '../../components/feature/Footer';
+import CookieBanner from '../../components/feature/CookieBanner';
 
 export default function Datenschutz() {
   return (
@@ -8,7 +9,7 @@ export default function Datenschutz() {
       style={{ background: 'var(--page-bg)', color: 'var(--page-fg)' }}
     >
       <Header />
-      <main className="max-w-5xl mx-auto px-6 pt-28 pb-16 md:pt-32 md:pb-24">
+      <main className="max-w-5xl mx-auto px-6 pt-32 pb-20 md:pt-36 md:pb-28">
         <div
           className="rounded-[28px] md:rounded-[32px] backdrop-blur-2xl border border-[rgba(15,23,42,0.14)] dark:border-white/10 shadow-[0_24px_80px_rgba(15,23,42,0.14)] p-6 sm:p-8 lg:p-10"
           style={{ background: 'var(--section-glass)' }}
@@ -732,6 +733,7 @@ export default function Datenschutz() {
         </div>
       </main>
       <Footer />
+      <CookieBanner />
     </div>
   );
 }
