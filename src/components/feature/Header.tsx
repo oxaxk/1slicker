@@ -72,8 +72,19 @@ export default function Header() {
       case 'whatsapp':
         return (
           <svg {...common} aria-hidden="true">
-            <path d="M12 3a8.5 8.5 0 0 0-7.3 12.9L4 21l5.3-1.4A8.5 8.5 0 1 0 12 3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-            <path d="M9.2 9.1c.2-.5.4-.6.8-.6h.7c.2 0 .5.1.6.4l.8 2c.1.2.1.5-.1.7l-.5.6c-.2.2-.2.5 0 .8.6 1.1 1.5 2 2.6 2.6.3.2.6.2.8 0l.6-.5c.2-.2.5-.2.7-.1l2 .8c.3.1.4.4.4.6v.7c0 .4-.1.6-.6.8-.7.3-1.9.5-3.9-.4-2-.9-3.7-2.6-4.6-4.6-.9-2-.7-3.2-.4-3.9Z" fill="currentColor" />
+            <path
+              d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L4 20.6l4.4-1.2A8.5 8.5 0 1 0 12 3.5Z"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9.1 9.2c.2-.4.5-.5.9-.5h.6c.3 0 .5.1.6.4l.7 1.8c.1.3 0 .5-.1.7l-.5.5c-.2.2-.2.5 0 .8.6 1 1.4 1.8 2.4 2.4.3.2.6.2.8 0l.5-.5c.2-.2.5-.2.7-.1l1.8.7c.3.1.4.3.4.6v.6c0 .4-.2.7-.6.9-.7.3-2 .6-4.2-.4-2.1-1-3.9-2.7-4.9-4.9-1-2.2-.7-3.5-.4-4.2Z"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
           </svg>
         );
       case 'tiktok':
@@ -99,10 +110,31 @@ export default function Header() {
       case 'linkedin':
         return (
           <svg {...common} aria-hidden="true">
-            <path d="M6.5 9.5V18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-            <path d="M6.5 6.5h.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-            <path d="M10.5 18v-5.2c0-1.7 1-3 2.7-3 1.6 0 2.3 1 2.3 2.9V18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M17.5 18V9.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <path
+              d="M6.8 10.2V18.6"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+            />
+            <path
+              d="M6.8 7.2h.01"
+              stroke="currentColor"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M10.4 18.6v-4.8c0-1.8 1.1-3.1 2.9-3.1 1.7 0 2.5 1.1 2.5 3v4.9"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M18 18.6v-8.4"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+            />
           </svg>
         );
       default:
