@@ -104,9 +104,10 @@ export default function CookieSettingsPage() {
                 Optionale Cookies (Analytics & Marketing)
               </h2>
               <p className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-75 leading-relaxed">
-                Optionale Cookies helfen uns zu verstehen, wie die Seite genutzt wird (z.&nbsp;B. über
-                Analytics) oder ermöglichen personalisierte Werbung (z.&nbsp;B. Google Ads). Diese werden nur
-                gesetzt, wenn du im Cookie-Banner ausdrücklich zustimmst.
+                Optionale Cookies und vergleichbare Technologien helfen uns zu verstehen, wie die Seite genutzt
+                wird (z.&nbsp;B. über Analytics), und ermöglichen Marketing-Maßnahmen (z.&nbsp;B. Google Ads
+                Conversion-Tracking) sowie das Nachladen externer Icon-Fonts (Font Awesome, Remix Icon). Diese
+                werden nur gesetzt, wenn du im Cookie-Banner ausdrücklich zustimmst.
               </p>
               <p className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-60 leading-relaxed mt-3">
                 Deine aktuelle Auswahl kannst du über den Cookie-Banner jederzeit ändern. Dafür kannst du den
