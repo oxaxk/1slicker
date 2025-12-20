@@ -178,6 +178,7 @@ export default function CookieBanner() {
   const handleToggle = (key: keyof Omit<ConsentState, 'necessary'>) => {
     const updated: ConsentState = { ...consent, [key]: !consent[key] };
     setConsent(updated);
+    applyConsent(updated);
   };
 
   const handleSaveSelection = () => {
@@ -283,7 +284,7 @@ export default function CookieBanner() {
                     checked={consent.icons}
                     onChange={() => handleToggle('icons')}
                   />
-                  <span>Externe Icon-Fonts (Font Awesome, Remix Icon)</span>
+                  <span>Externe Icon-Fonts (Font Awesome, Remix Icon) – Basis-Icons der Seite bleiben immer aktiv.</span>
                 </label>
               </div>
 
