@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/feature/Header';
 import Footer from '../../components/feature/Footer';
-import CookieBanner from '../../components/feature/CookieBanner';
 
 export default function CookieSettingsPage() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -151,7 +150,6 @@ export default function CookieSettingsPage() {
           </section>
         </div>
       </main>
-      <CookieBanner />
       <Footer />
     </>
   );
