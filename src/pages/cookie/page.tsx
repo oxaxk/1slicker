@@ -88,8 +88,9 @@ export default function CookieSettingsPage() {
               </h2>
               <p className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-75 leading-relaxed">
                 Diese Cookies sind erforderlich, damit die Website technisch funktioniert. Dazu gehören
-                z.&nbsp;B. deine Session sowie deine Auswahl im Cookie-Banner selbst. Sie können in unseren
-                Systemen nicht deaktiviert werden.
+                z.&nbsp;B. deine Session, deine Auswahl im Cookie-Banner selbst sowie bestimmte
+                Darstellungsfunktionen (z.&nbsp;B. lokal eingebundene Icons und UI-Elemente). Sie können in
+                unseren Systemen nicht deaktiviert werden.
               </p>
             </div>
 
@@ -105,13 +106,13 @@ export default function CookieSettingsPage() {
               </h2>
               <p className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-75 leading-relaxed">
                 Optionale Cookies und vergleichbare Technologien helfen uns zu verstehen, wie die Seite genutzt
-                wird (z.&nbsp;B. über Analytics), und ermöglichen Marketing-Maßnahmen (z.&nbsp;B. Google Ads
-                Conversion-Tracking) sowie das Nachladen externer Icon-Fonts (Font Awesome, Remix Icon). Diese
-                werden nur gesetzt, wenn du im Cookie-Banner ausdrücklich zustimmst.
+                wird (z.&nbsp;B. über Analytics) und ermöglichen Marketing-Maßnahmen (z.&nbsp;B. Google Ads
+                Conversion-Tracking). Diese Cookies werden nur gesetzt, wenn du im Cookie-Banner ausdrücklich
+                zustimmst.
               </p>
               <p className="text-xs md:text-sm text-[color:var(--page-fg)] opacity-60 leading-relaxed mt-3">
-                Deine aktuelle Auswahl kannst du über den Cookie-Banner jederzeit ändern. Dafür kannst du den
-                folgenden Button nutzen.
+                Deine aktuelle Auswahl zu Analytics- und Marketing-Cookies kannst du über den Cookie-Banner
+                jederzeit ändern. Dafür kannst du den folgenden Button nutzen.
               </p>
             </div>
 
