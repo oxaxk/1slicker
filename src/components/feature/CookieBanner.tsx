@@ -14,7 +14,7 @@ const DEFAULT_CONSENT: ConsentState = {
   necessary: true,
   analytics: false,
   marketing: false,
-  icons: false,
+  icons: true,
 };
 
 function loadConsent(): ConsentState | null {
@@ -28,7 +28,7 @@ function loadConsent(): ConsentState | null {
       necessary: true,
       analytics: !!parsed.analytics,
       marketing: !!parsed.marketing,
-      icons: !!parsed.icons,
+      icons: true,
     };
   } catch {
     return null;
@@ -91,9 +91,9 @@ function applyConsent(consent: ConsentState) {
   const root = document.documentElement;
   root.dataset.analyticsConsent = consent.analytics ? 'granted' : 'denied';
   root.dataset.marketingConsent = consent.marketing ? 'granted' : 'denied';
-  root.dataset.iconsConsent = consent.icons ? 'granted' : 'denied';
+  root.dataset.iconsConsent = 'granted';
 
-  toggleIconFonts(consent.icons);
+  toggleIconFonts(true);
 }
 
 export default function CookieBanner() {
@@ -167,7 +167,7 @@ export default function CookieBanner() {
       necessary: true,
       analytics: false,
       marketing: false,
-      icons: false,
+      icons: true,
     };
     setConsent(onlyNecessary);
     saveConsent(onlyNecessary);
@@ -278,13 +278,15 @@ export default function CookieBanner() {
                   <span>Marketing (Google Ads, Facebook Pixel, o.ä.)</span>
                 </label>
 
-                <label className="flex items-center gap-3 cursor-pointer select-none text-[color:var(--page-fg)]">
+                <label className="flex items-center gap-3 cursor-default select-none text-[color:var(--page-fg)]">
                   <input
                     type="checkbox"
-                    checked={consent.icons}
-                    onChange={() => handleToggle('icons')}
+                    checked
+                    disabled
+                    readOnly
+                    aria-disabled="true"
                   />
-                  <span>Externe Icon-Fonts (Font Awesome, Remix Icon) – Basis-Icons der Seite bleiben immer aktiv.</span>
+                  <span>Externe Icon-Fonts (Font Awesome, Remix Icon) – werden aus Designgründen immer geladen und gelten als erforderlich.</span>
                 </label>
               </div>
 
