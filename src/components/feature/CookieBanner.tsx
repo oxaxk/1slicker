@@ -5,7 +5,6 @@ type ConsentState = {
   necessary: boolean;
   analytics: boolean;
   marketing: boolean;
-  icons: boolean;
 };
 
 const CONSENT_KEY = 'slicker_cookie_consent_v1';
@@ -14,7 +13,6 @@ const DEFAULT_CONSENT: ConsentState = {
   necessary: true,
   analytics: false,
   marketing: false,
-  icons: true,
 };
 
 function loadConsent(): ConsentState | null {
@@ -28,7 +26,6 @@ function loadConsent(): ConsentState | null {
       necessary: true,
       analytics: !!parsed.analytics,
       marketing: !!parsed.marketing,
-      icons: true,
     };
   } catch {
     return null;
@@ -42,7 +39,6 @@ function saveConsent(consent: ConsentState) {
     JSON.stringify({
       analytics: consent.analytics,
       marketing: consent.marketing,
-      icons: consent.icons,
     })
   );
 }
@@ -91,7 +87,7 @@ function applyConsent(consent: ConsentState) {
   const root = document.documentElement;
   root.dataset.analyticsConsent = consent.analytics ? 'granted' : 'denied';
   root.dataset.marketingConsent = consent.marketing ? 'granted' : 'denied';
-  root.dataset.iconsConsent = 'granted';
+  root.dataset.iconsConsent = 'granted'; // Icon-Fonts gelten als technisch notwendig
 
   toggleIconFonts(true);
 }
@@ -154,7 +150,6 @@ export default function CookieBanner() {
       necessary: true,
       analytics: true,
       marketing: true,
-      icons: true,
     };
     setConsent(all);
     saveConsent(all);
@@ -167,7 +162,6 @@ export default function CookieBanner() {
       necessary: true,
       analytics: false,
       marketing: false,
-      icons: true,
     };
     setConsent(onlyNecessary);
     saveConsent(onlyNecessary);
@@ -239,7 +233,7 @@ export default function CookieBanner() {
               className="text-sm mb-6 text-[color:var(--page-fg)] opacity-80"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. Optionale Cookies für Statistik, Marketing und externe Icon-Fonts setzen wir nur, wenn du zustimmst.
+              Wir verwenden technisch notwendige Cookies, um diese Webseite zu betreiben. Optionale Cookies für Statistik und Marketing setzen wir nur, wenn du zustimmst.
             </p>
 
             <form
@@ -276,17 +270,6 @@ export default function CookieBanner() {
                     onChange={() => handleToggle('marketing')}
                   />
                   <span>Marketing (Google Ads, Facebook Pixel, o.ä.)</span>
-                </label>
-
-                <label className="flex items-center gap-3 cursor-default select-none text-[color:var(--page-fg)]">
-                  <input
-                    type="checkbox"
-                    checked
-                    disabled
-                    readOnly
-                    aria-disabled="true"
-                  />
-                  <span>Externe Icon-Fonts (Font Awesome, Remix Icon) – werden aus Designgründen immer geladen und gelten als erforderlich.</span>
                 </label>
               </div>
 
