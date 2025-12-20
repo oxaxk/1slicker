@@ -1,5 +1,6 @@
 import Header from '../../components/feature/Header';
 import Footer from '../../components/feature/Footer';
+import CookieBanner from '../../components/feature/CookieBanner';
 
 export default function Impressum() {
   return (
@@ -189,6 +190,7 @@ export default function Impressum() {
         </div>
       </main>
       <Footer />
+      <CookieBanner />
     </div>
   );
 }
