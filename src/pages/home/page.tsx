@@ -11,7 +11,6 @@ import TeamSection from './components/TeamSection';
 import SpecialsSection from './components/SpecialsSection';
 import ContactSection from './components/ContactSection';
 
-import CookieBanner from '../../components/feature/CookieBanner';
 
 const GLOWS = [
   {
@@ -219,7 +218,6 @@ const Home: React.FC = () => {
           </section>
         </main>
         <Footer />
-        <CookieBanner />
       </div>
     </div>
   );
