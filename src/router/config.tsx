@@ -7,7 +7,6 @@ import Home from '../pages/home/page';
 import Datenschutz from '../pages/datenschutz/page';
 import Impressum from '../pages/impressum/page';
 import CookieSettingsPage from '../pages/cookie/page';
-import CookieBanner from '../components/feature/CookieBanner';
 import ChatWidget from '../components/feature/ChatWidget';
 
 function ScrollToTop() {
@@ -26,7 +25,6 @@ function RootLayout() {
     <>
       <ScrollToTop />
       <Outlet />
-      <CookieBanner />
       <ChatWidget />
     </>
   );
