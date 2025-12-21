@@ -97,15 +97,6 @@ export default function CookieBanner() {
   const [isOpen, setIsOpen] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  // Guard gegen doppelte Instanzen (sonst "2x klicken"-Effekt)
-  const [isPrimaryInstance] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    const w = window as any;
-    if (w.__slickerCookieBannerMounted) return false;
-    w.__slickerCookieBannerMounted = true;
-    return true;
-  });
-
   // Initial Consent laden
   useEffect(() => {
     const loaded = loadConsent();
@@ -121,18 +112,6 @@ export default function CookieBanner() {
     setInitialized(true);
   }, []);
 
-  // Guard-Cleanup
-  useEffect(() => {
-    if (!isPrimaryInstance) return;
-    return () => {
-      if (typeof window === 'undefined') return;
-      const w = window as any;
-      if (w.__slickerCookieBannerMounted) {
-        w.__slickerCookieBannerMounted = false;
-      }
-    };
-  }, [isPrimaryInstance]);
-
   // Event von Cookie-Seite: Banner öffnen
   useEffect(() => {
     const handler = () => setIsOpen(true);
@@ -143,7 +122,7 @@ export default function CookieBanner() {
     };
   }, []);
 
-  if (!initialized || !isPrimaryInstance) return null;
+  if (!initialized) return null;
 
   const handleAcceptAll = () => {
     const all: ConsentState = {
